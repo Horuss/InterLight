@@ -8,9 +8,9 @@
 	<name>InterLight</name>
 	
 	<modules>
-		<module>../interlight-interface</module>
 		<module>../interlight-model</module>
 		<module>../interlight-opt</module>
+		<module>../interlight-interface</module>
 	</modules>
 	
 	<dependencies>

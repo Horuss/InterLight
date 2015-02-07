@@ -8,6 +8,31 @@
 	</parent>
 	<artifactId>interlight-interface</artifactId>
 	<name>InterLight Interface</name>
+	
+	<organization>
+        <name>AGH-UST</name>
+    </organization>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.1.2</version>
+                <configuration>
+                    <mainClass>pl.edu.agh.kis.interlight.fx.MainApp</mainClass>
+                </configuration>
+                <executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<phase>install</phase>
+					</execution>
+				</executions>
+            </plugin>
+        </plugins>
+    </build>
 
 	<dependencies>
 	
@@ -22,6 +47,8 @@
 			<artifactId>interlight-opt</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		
+		<!-- Project specific dependencies -->
 		
 	</dependencies>
 </project>
