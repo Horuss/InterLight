@@ -1,0 +1,175 @@
+
+     #  My first scene.
+     #
+
+     #
+     # The basic primitive format is:
+     #
+     # modifier TYPE identifier
+     # number_string_arguments [string arguments...]
+     # number_integer_arguments [integer arguments...]
+     # number_real_arguments [real arguments...]
+     #
+     # The special modifier "void" means no modifier.
+     # TYPE is one of a finite number of predefined types, and
+     # the meaning of the arguments following is determined by
+     # this type.  (See RADIANCE Reference Manual for details.)
+     # The identifier may be used as a modifier later
+     # in this file or in files following this one.
+     # All values are separated by white space 
+     # (spaces, tabs, newlines).
+     #
+
+     # this is the material for my light source:
+	 
+     void light bright
+     0
+     0
+     3  200  200  200
+     #  red_emission  green_emission  blue_emission  #
+
+     # this is the material for my test ball:
+
+     void plastic red_plastic
+     0
+     0
+     5  .7  .05  .05  .05  .05
+     #  red  green  blue  specularity  roughness  #
+
+     # here is the light source:
+
+     bright sphere fixture
+     0
+     0
+     4  3  3  2.75  .125
+     #  xcent  ycent  zcent  radius  #
+	 
+	 bright sphere fixture
+     0
+     0
+     4  1  1  2.75  .125
+     #  xcent  ycent  zcent  radius  #
+	 
+	 bright sphere fixture
+     0
+     0
+     4  1  5  2.75  .125
+     #  xcent  ycent  zcent  radius  #
+	 
+	 bright sphere fixture
+     0
+     0
+     4  5  5  2.75  .125
+     #  xcent  ycent  zcent  radius  #	 
+	 
+	 
+	 bright sphere fixture
+     0
+     0
+     4  4  1  2.75  .125
+     #  xcent  ycent  zcent  radius  #	 
+	 
+
+     # here is the ball:
+     red_plastic sphere ball
+     0
+     0
+     4  1  1  .625  .2
+	 
+     # here is the ball:
+     red_plastic sphere ball
+     0
+     0
+     4  1  5  .625  .2
+
+     # here is the ball:
+     red_plastic sphere ball
+     0
+     0
+     4  5  5  .625  .2
+
+     # here is the ball:
+     red_plastic sphere ball
+     0
+     0
+     4  4  1  .625  .2
+
+     # here is the ball:
+     red_plastic sphere ball
+     0
+     0
+     4  3  3  .625  .2
+
+	 
+	 # the wall material:
+
+     void plastic gray_paint
+     0
+     0
+     5  .5  .5  .5  0  0
+
+     # a box shaped room:
+
+     !genbox gray_paint room  6  6  3  -i
+
+	# a shiny blue box:
+
+     void plastic blue_plastic
+     0
+     0
+     5 .1 .1 .6 .1 .1
+
+     !genbox blue_plastic box  2  2  0.1  | xform -t  0  4  0.5
+	 
+	 !genbox blue_plastic box  2  2  0.1  | xform -t  3  0  0.5
+	 
+	 !genbox blue_plastic box  2  2  0.1  | xform -t  2  2  0.5
+	 
+	 		
+
+     # a chrome rod to suspend the light from the ceiling:
+
+     void metal chrome
+     0
+     0
+     5  .8  .8  .8  .9  0
+
+     chrome cylinder fixture_support
+     0
+     0
+     7
+     3       3       2.75
+     3       3       3
+     .05
+
+     chrome cylinder fixture_support
+     0
+     0
+     7
+     1       1       2.75
+     1       1       3
+     .05
+	
+     chrome cylinder fixture_support
+     0
+     0
+     7
+     1       5       2.75
+     1       5       3
+     .05
+	 
+     chrome cylinder fixture_support
+     0
+     0
+     7
+     5       5       2.75
+     5       5       3
+     .05
+	 
+     chrome cylinder fixture_support
+     0
+     0
+     7
+     4       1       2.75
+     4       1       3
+     .05
