@@ -6,15 +6,35 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>InterLight</name>
-	
+	<description>InterLight root project for common dependencies</description>
+	<developers>
+		<developer>
+			<name>Jakub Czajkowski</name>
+			<url>http://www.horuss.pl/</url>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+		<developer>
+			<name>Bartłomiej Gnojek</name>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+		<developer>
+			<name>Rafał Salawa</name>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+	</developers>
+
 	<modules>
 		<module>../interlight-model</module>
 		<module>../interlight-opt</module>
 		<module>../interlight-interface</module>
+		<module>../interlight-common-datamodel</module>
 	</modules>
-	
+
 	<dependencies>
-	
+
 		<!-- Common dependencies here -->
 
 		<!-- JUnit -->

@@ -8,6 +8,15 @@
 	</parent>
 	<artifactId>interlight-interface</artifactId>
 	<name>InterLight Interface</name>
+	<description>InterLight Main GUI App, assembling all other modules</description>
+	<developers>
+		<developer>
+			<name>Jakub Czajkowski</name>
+			<url>http://www.horuss.pl/</url>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+	</developers>
 	
 	<organization>
         <name>AGH-UST</name>

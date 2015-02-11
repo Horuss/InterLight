@@ -6,12 +6,23 @@
 		<artifactId>interlight</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<artifactId>interlight-model</artifactId>
-	<name>InterLight Model</name>
-	<description>InterLight formal scene model with its utilites</description>
+	<artifactId>interlight-common-datamodel</artifactId>
+	<name>InterLight Common Datamodel</name>
+	<description>InterLight common datamodel used by all other modules</description>
 	<developers>
 		<developer>
+			<name>Jakub Czajkowski</name>
+			<url>http://www.horuss.pl/</url>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+		<developer>
 			<name>Bartłomiej Gnojek</name>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+		<developer>
+			<name>Rafał Salawa</name>
 			<organization>AGH-UST</organization>
 			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
 		</developer>

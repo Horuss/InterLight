@@ -8,7 +8,15 @@
 	</parent>
 	<artifactId>interlight-opt</artifactId>
 	<name>InterLight Optimalization</name>
-		
+	<description>InterLight optimalization module for financial analysis and norm validation</description>
+	<developers>
+		<developer>
+			<name>Rafał Salawa</name>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+	</developers>
+	
 	<dependencies>
 	
 		<!-- Project specific dependencies -->
