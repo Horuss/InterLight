@@ -27,10 +27,10 @@
 	</developers>
 
 	<modules>
+		<module>../interlight-common-datamodel</module>
 		<module>../interlight-model</module>
 		<module>../interlight-opt</module>
 		<module>../interlight-interface</module>
-		<module>../interlight-common-datamodel</module>
 	</modules>
 
 	<dependencies>

@@ -19,6 +19,13 @@
 	
 	<dependencies>
 	
+		<!-- InterLight dependencies -->
+		<dependency>
+			<groupId>pl.edu.agh.kis</groupId>
+			<artifactId>interlight-common-datamodel</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	
 		<!-- Project specific dependencies -->
 		
 	</dependencies>
