@@ -12,8 +12,9 @@ public class CommandProvider {
 	}
 
 	public String getCommandsPath() {
-		return Paths.get("lib/radiance/" + systemDir + "/")
-				.toAbsolutePath().toString();
+		return Paths
+				.get(System.getProperty("user.dir") + "/lib/radiance/"
+						+ systemDir + "/").toAbsolutePath().toString();
 	}
 
 	public String createCommand(String command) {
