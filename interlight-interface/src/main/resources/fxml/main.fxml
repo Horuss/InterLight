@@ -1,16 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="309.0" prefWidth="330.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="pl.edu.agh.kis.interlight.fx.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.kis.interlight.fx.MainController">
    <children>
-      <Button layoutX="51.0" layoutY="155.0" mnemonicParsing="false" onAction="#sayHello" text="Button" />
-      <Label fx:id="messageLabel" layoutX="49.0" layoutY="215.0" text="Label" />
-      <TextField fx:id="firstNameField" layoutX="63.0" layoutY="35.0" />
-      <TextField fx:id="lastNameField" layoutX="63.0" layoutY="84.0" />
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <BorderPane prefHeight="343.0" prefWidth="600.0">
+         <left>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnRectangle" mnemonicParsing="false" onAction="#createRectangle" text="Rect" />
+                  <Button fx:id="btnCircle" mnemonicParsing="false" onAction="#createCircle" text="Circ" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </left>
+         <center>
+            <StackPane fx:id="canvas" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </StackPane>
+         </center>
+         <right>
+            <VBox fx:id="rightPanel">
+               <children>
+                  <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </children>
+            </VBox>
+         </right>
+      </BorderPane>
    </children>
-</AnchorPane>
+</VBox>

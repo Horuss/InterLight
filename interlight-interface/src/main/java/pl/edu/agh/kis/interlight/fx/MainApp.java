@@ -14,10 +14,9 @@ public class MainApp extends Application {
 
 	public void start(Stage stage) throws Exception {
 
-		String fxmlFile = "/fxml/main.fxml";
 		FXMLLoader loader = new FXMLLoader();
 		Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(
-				fxmlFile));
+				"/fxml/main.fxml"));
 
 		Scene scene = new Scene(rootNode);
 		scene.getStylesheets().add("/styles/style.css");
