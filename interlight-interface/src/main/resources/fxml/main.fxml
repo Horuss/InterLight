@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.kis.interlight.fx.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.kis.interlight.fx.MainController">
    <children>
       <MenuBar>
         <menus>
@@ -26,32 +26,85 @@
           </Menu>
         </menus>
       </MenuBar>
-      <BorderPane prefHeight="343.0" prefWidth="600.0">
-         <left>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="btnRectangle" mnemonicParsing="false" onAction="#createRectangle" text="Rect" />
-                  <Button fx:id="btnCircle" mnemonicParsing="false" onAction="#createCircle" text="Circ" />
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-         </left>
-         <center>
-            <StackPane fx:id="canvas" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-            </StackPane>
-         </center>
-         <right>
-            <VBox fx:id="rightPanel">
-               <children>
-                  <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-               </children>
-            </VBox>
-         </right>
-      </BorderPane>
+      <TabPane>
+         <tabs>
+            <Tab closable="false" text="Scene">
+               <content>
+                  <BorderPane>
+                     <left>
+                        <VBox spacing="10.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="btnRectangle" mnemonicParsing="false" onAction="#createRectangle" text="Rect" />
+                              <Button fx:id="btnCircle" mnemonicParsing="false" onAction="#createCircle" text="Circ" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </left>
+                     <center>
+                        <StackPane fx:id="canvasWrapper" prefHeight="550.0" prefWidth="652.0">
+                           <children>
+                              <StackPane fx:id="canvas" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" />
+                              <GridPane fx:id="newSceneGrid" hgap="10.0" maxHeight="300.0" maxWidth="200.0" vgap="10.0" StackPane.alignment="CENTER">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <StackPane.margin>
+                                    <Insets bottom="60.0" left="60.0" right="60.0" top="60.0" />
+                                 </StackPane.margin>
+                                 <children>
+                                    <Label maxWidth="1.7976931348623157E308" text="New room heading" GridPane.columnSpan="2" />
+                                    <Label text="Width" GridPane.rowIndex="1" />
+                                    <Label text="Length" GridPane.rowIndex="2" />
+                                    <Label text="Height" GridPane.rowIndex="3" />
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newScene" text="Button" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                                    <TextField fx:id="sceneWidth" text="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="sceneLength" text="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="sceneHeight" text="3.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </BorderPane.margin>
+                        </StackPane>
+                     </center>
+                     <right>
+                        <VBox fx:id="rightPanel">
+                           <children>
+                              <ListView fx:id="listView" prefHeight="264.0" prefWidth="248.0" BorderPane.alignment="CENTER" />
+                           </children>
+                        </VBox>
+                     </right>
+                     <bottom>
+                        <HBox BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" text="Button" />
+                              <Button mnemonicParsing="false" text="Button" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </HBox>
+                     </bottom>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </children>
 </VBox>
