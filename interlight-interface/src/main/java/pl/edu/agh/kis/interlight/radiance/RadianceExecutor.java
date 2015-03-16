@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import pl.edu.agh.kis.interlight.datamodel.Room;
-
 public class RadianceExecutor {
 
 	public static final String COMMAND_OCONV = "oconv";
 	public static final String COMMAND_RTRACE = "rtrace";
 	public static final String COMMAND_RCALC = "rcalc";
+	public static final String COMMAND_IES2RAD = "ies2rad";
 
 	private CommandProvider commandProvider = new CommandProvider();
 
@@ -99,20 +98,47 @@ public class RadianceExecutor {
 		return tempFile;
 	}
 
-	public Path createTempSampleVectors(Room room) throws IOException {
+	public Path createTempSampleVectors(Double width, Double length,
+			Double height) throws IOException {
 		Path tempFile = Files.createTempFile("interlight-temp", ".vecSamples");
-		tempFile.toFile().deleteOnExit();
+		//tempFile.toFile().deleteOnExit();
 		OutputStream out = Files.newOutputStream(tempFile,
 				StandardOpenOption.APPEND);
 		DecimalFormat df = new DecimalFormat("#.#",
 				DecimalFormatSymbols.getInstance(Locale.US));
-		for (Double d1 = 0.0; d1 <= room.getLength(); d1 += 0.1) {
-			for (Double d2 = 0.0; d2 <= room.getWidth(); d2 += 0.1) {
-				out.write((df.format(d1) + " " + df.format(d2) + " "
-						+ room.getHeight() + " 0 0 -1\n").getBytes());
+		for (Double d1 = 0.0; d1 <= length; d1 += 0.1) {
+			for (Double d2 = 0.0; d2 <= width; d2 += 0.1) {
+				out.write((df.format(d1) + " " + df.format(d2) + " " + height + " 0 0 -1\n")
+						.getBytes());
 			}
 		}
 		out.close();
 		return tempFile;
+	}
+
+	public Path createRadDirFromIes(Path destinationDir, Path ies)
+			throws IOException {
+		if (!Files.exists(destinationDir)) {
+			Files.createDirectory(destinationDir);
+		}
+
+		List<String> commands = new ArrayList<String>();
+		commands.add(commandProvider
+				.createCommand(RadianceExecutor.COMMAND_IES2RAD));
+		commands.add("-o");
+		commands.add(destinationDir.toAbsolutePath().toString()
+				+ File.separator + ies.getFileName().toString().split("\\.")[0]);
+		commands.add(ies.toAbsolutePath().toString());
+		ProcessBuilder builder = new ProcessBuilder(commands);
+		builder.directory(new File(commandProvider.getCommandsPath()));
+		builder.redirectErrorStream(true);
+		Process process = builder.start();
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		return destinationDir;
 	}
 }
