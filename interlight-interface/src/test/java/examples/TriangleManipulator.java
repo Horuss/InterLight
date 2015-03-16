@@ -1,7 +1,6 @@
-package pl.edu.agh.kis.interlight.radiance;
+package examples;
 
 import javafx.scene.Scene;
-
 import javafx.application.Application;
 import javafx.beans.property.*;
 import javafx.beans.value.*;
@@ -83,7 +82,8 @@ public class TriangleManipulator extends Application {
  
   // a draggable anchor displayed around a point.
   class Anchor extends Circle {
-    private final DoubleProperty x, y;
+    @SuppressWarnings("unused")
+	private final DoubleProperty x, y;
  
     Anchor(Color color, DoubleProperty x, DoubleProperty y) {
       super(x.get(), y.get(), 10);

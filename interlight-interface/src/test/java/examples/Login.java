@@ -1,4 +1,4 @@
-package pl.edu.agh.kis.interlight.radiance;
+package examples;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -21,7 +21,8 @@ import javafx.stage.Stage;
 
 public class Login extends Application {
 
-    @Override
+    @SuppressWarnings("static-access")
+	@Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("JavaFX Welcome");
         GridPane grid = new GridPane();

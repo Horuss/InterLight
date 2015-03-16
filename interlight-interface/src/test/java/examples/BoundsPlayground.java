@@ -1,4 +1,4 @@
-package pl.edu.agh.kis.interlight.radiance;
+package examples;
 
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
