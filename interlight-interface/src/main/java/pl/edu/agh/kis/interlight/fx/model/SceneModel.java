@@ -15,10 +15,13 @@ public class SceneModel {
 	
 	private Room room;
 	private ObservableList<AbstractSceneObject> objects;
-	private ObservableList<AbstractSceneObject> lightSources;
+	private ObservableList<AbstractSceneObject> lightPoints;
+	private ObservableList<LightSource> lightSources;
 	
 	public SceneModel() {
 		objects = FXCollections
+				.observableArrayList();
+		lightPoints = FXCollections
 				.observableArrayList();
 		lightSources = FXCollections
 				.observableArrayList();
@@ -44,7 +47,11 @@ public class SceneModel {
 		return (Polygon) getRoom().getSceneObject();
 	}
 
-	public ObservableList<AbstractSceneObject> getLightSources() {
+	public ObservableList<AbstractSceneObject> getLightPoints() {
+		return lightPoints;
+	}
+	
+	public ObservableList<LightSource> getLightSources() {
 		return lightSources;
 	}
 	

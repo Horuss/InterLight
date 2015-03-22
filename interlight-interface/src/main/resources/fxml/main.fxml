@@ -138,16 +138,25 @@
                                     </VBox>
                                  </content>
                               </TitledPane>
-                              <TitledPane expanded="false" prefHeight="1000.0" text="Light sources">
+                              <TitledPane expanded="false" prefHeight="1000.0" text="Light points">
                                  <content>
-                                    <VBox fx:id="lightsPane" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                                    <VBox fx:id="lightPointsPane" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#createLightSource" text="Simple light source" />
-                                          <Button mnemonicParsing="false" onAction="#createIesLightSource" text="IES light source" />
-                                          <ListView fx:id="listViewLights" prefHeight="200.0" prefWidth="200.0" />
+                                          <Button mnemonicParsing="false" onAction="#createLightPoint" text="Add light point" />
+                                          <ListView fx:id="listViewLightPoints" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                     </VBox>
                                  </content>
+                              </TitledPane>
+                              <TitledPane animated="false" text="Available light sources">
+                                <content>
+                                    <VBox fx:id="lightSourcesPane" spacing="5.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#createLightSource" text="Add light source" />
+                                          <ListView fx:id="listViewLightSources" prefHeight="200.0" prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                </content>
                               </TitledPane>
                            </panes>
                            <opaqueInsets>

@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
+import pl.edu.agh.kis.interlight.fx.model.LightSource;
 
 public class MainController {
 
@@ -43,7 +44,9 @@ public class MainController {
 	@FXML
 	private TextField sceneLength;
 	@FXML
-	private ListView<AbstractSceneObject> listViewLights;
+	private ListView<AbstractSceneObject> listViewLightPoints;
+	@FXML
+	private ListView<LightSource> listViewLightSources;
 	@FXML
 	private Accordion accordion;
 	@FXML
@@ -51,7 +54,9 @@ public class MainController {
 	@FXML
 	private VBox objectsPane;
 	@FXML
-	private VBox lightsPane;
+	private VBox lightPointsPane;
+	@FXML
+	private VBox lightSourcesPane;
 	@FXML
 	private ListView<String> listViewProjects;
 	@FXML
@@ -132,7 +137,7 @@ public class MainController {
 						}
 					}
 				});
-		// Lights
+		// Light points
 		accordion.getPanes().get(2).expandedProperty()
 				.addListener(new ChangeListener<Boolean>() {
 					@Override
@@ -140,13 +145,13 @@ public class MainController {
 							ObservableValue<? extends Boolean> observable,
 							Boolean oldValue, Boolean newValue) {
 						if (newValue) {
-							for (AbstractSceneObject aso : listViewLights
+							for (AbstractSceneObject aso : listViewLightPoints
 									.getItems()) {
 								aso.enableEventHandlers();
 								aso.getSceneObject().toFront();
 							}
 						} else {
-							for (AbstractSceneObject aso : listViewLights
+							for (AbstractSceneObject aso : listViewLightPoints
 									.getItems()) {
 								aso.getSceneObject().pseudoClassStateChanged(
 										guiHelper.getSelectedClass(), false);
@@ -157,7 +162,7 @@ public class MainController {
 								guiHelper.getSceneModel().getRoomBounds()
 										.toBack();
 							}
-							listViewLights.getSelectionModel().clearSelection();
+							listViewLightPoints.getSelectionModel().clearSelection();
 						}
 					}
 				});
@@ -188,8 +193,8 @@ public class MainController {
 						}
 					}
 				});
-		listViewLights.setItems(guiHelper.getSceneModel().getLightSources());
-		listViewLights.getSelectionModel().selectedItemProperty()
+		listViewLightPoints.setItems(guiHelper.getSceneModel().getLightPoints());
+		listViewLightPoints.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<AbstractSceneObject>() {
 					@Override
 					public void changed(
@@ -197,11 +202,11 @@ public class MainController {
 							AbstractSceneObject oldValue,
 							AbstractSceneObject newValue) {
 						if (oldValue != null) {
-							lightsPane.getChildren().remove(
+							lightPointsPane.getChildren().remove(
 									oldValue.getPropertiesPanel());
 						}
 						if (newValue != null) {
-							lightsPane.getChildren().add(
+							lightPointsPane.getChildren().add(
 									newValue.getPropertiesPanel());
 							if (oldValue != null) {
 								oldValue.getSceneObject()
@@ -211,6 +216,25 @@ public class MainController {
 							}
 							newValue.getSceneObject().pseudoClassStateChanged(
 									guiHelper.getSelectedClass(), true);
+						}
+					}
+				});
+		
+		listViewLightSources.setItems(guiHelper.getSceneModel().getLightSources());
+		listViewLightSources.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<LightSource>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends LightSource> observable,
+							LightSource oldValue,
+							LightSource newValue) {
+						if (oldValue != null) {
+							lightSourcesPane.getChildren().remove(
+									oldValue.getPropertiesPanel());
+						}
+						if (newValue != null) {
+							lightSourcesPane.getChildren().add(
+									newValue.getPropertiesPanel());
 						}
 					}
 				});
@@ -364,13 +388,13 @@ public class MainController {
 	}
 
 	@FXML
-	void createIesLightSource(ActionEvent event) {
-		guiHelper.createLightSource(listViewLights, true);
-	}
-
-	@FXML
 	void createLightSource(ActionEvent event) {
-		guiHelper.createLightSource(listViewLights, false);
+		guiHelper.createLightSource(listViewLightSources);
+	}
+	
+	@FXML
+	void createLightPoint(ActionEvent event) {
+		guiHelper.createLightPoint(listViewLightPoints);
 	}
 
 	@FXML

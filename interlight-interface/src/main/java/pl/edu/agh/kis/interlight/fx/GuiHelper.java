@@ -32,8 +32,8 @@ import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
 import pl.edu.agh.kis.interlight.fx.model.Cuboid;
 import pl.edu.agh.kis.interlight.fx.model.Cylinder;
 import pl.edu.agh.kis.interlight.fx.model.Ies;
+import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
-import pl.edu.agh.kis.interlight.fx.model.LightSourceIes;
 import pl.edu.agh.kis.interlight.fx.model.SceneModel;
 import pl.edu.agh.kis.interlight.fx.panel.RoomPropertiesPanel;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
@@ -300,20 +300,22 @@ public class GuiHelper {
 		sceneModel.getObjects().add(cylinder);
 		canvas.getChildren().add(e);
 	}
+	
+	public void createLightPoint(ListView<AbstractSceneObject> listViewLights) {
+		LightPoint lightPoint = null;
+		lightPoint = new LightPoint(sceneModel.getRoomHeightM());
+		lightPoint.createPropertiesPanel(this);
+		lightPoint.createEventHandlers(this, listViewLights);
+		lightPoint.enableEventHandlers();
+		sceneModel.getLightPoints().add(lightPoint);
+		canvas.getChildren().add(lightPoint.getSceneObject());
+	}
 
-	public void createLightSource(ListView<AbstractSceneObject> listViewLights,
-			boolean ies) {
+	public void createLightSource(ListView<LightSource> listViewLightSources) {
 		LightSource lightSource = null;
-		if (ies) {
-			lightSource = new LightSourceIes(sceneModel.getRoomHeightM());
-		} else {
-			lightSource = new LightSource(sceneModel.getRoomHeightM());
-		}
+		lightSource = new LightSource();
 		lightSource.createPropertiesPanel(this);
-		lightSource.createEventHandlers(this, listViewLights);
-		lightSource.enableEventHandlers();
 		sceneModel.getLightSources().add(lightSource);
-		canvas.getChildren().add(lightSource.getSceneObject());
 	}
 
 	public void enableRoomEditing() {

@@ -38,6 +38,7 @@ public abstract class AbstractPropertiesPanel extends GridPane {
 		setHgap(10);
 		setVgap(10);
 		setPadding(new Insets(10, 10, 10, 10));
+		
 		Label lblHeight = new Label("Height [m]:");
 		add(lblHeight, 0, 0);
 		spinHeight = new Spinner<Double>(0.0, 10.0, object.getHeight(), 0.5);
