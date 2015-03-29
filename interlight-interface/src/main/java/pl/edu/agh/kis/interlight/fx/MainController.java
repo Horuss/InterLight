@@ -5,7 +5,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,19 +13,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import pl.edu.agh.kis.interlight.datamodel.ISolution;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 
@@ -438,54 +432,7 @@ public class MainController {
 	@FXML
 	void calculate(ActionEvent event) {
 		// TODO
-		Tab outputTab = new Tab("Output");
-
-		FlowPane pane = new FlowPane();
-
-		TableView<ISolution> table = new TableView<ISolution>();
-		pane.setVgap(10.0);
-		pane.setPadding(new Insets(20, 50, 20, 50));
-		table.setPrefWidth(900);
-		table.setPrefHeight(194);
-		
-		TableColumn<ISolution, Double> colEnergySavings = new TableColumn<ISolution, Double>(
-				"Energy savings");
-		colEnergySavings.setPrefWidth(179);
-		colEnergySavings.setCellValueFactory(new PropertyValueFactory<>(
-				"energySavings"));
-		table.getColumns().add(colEnergySavings);
-		TableColumn<ISolution, Double> colExploitationCostsSavings = new TableColumn<ISolution, Double>(
-				"Exploitation costs savings");
-		colExploitationCostsSavings.setPrefWidth(179);
-		colExploitationCostsSavings.setCellValueFactory(new PropertyValueFactory<>("exploitationCostsSavings"));
-		table.getColumns().add(colExploitationCostsSavings);
-		TableColumn<ISolution, Double> colOperatingCostsSavings = new TableColumn<ISolution, Double>(
-				"Operating costs savings");
-		colOperatingCostsSavings.setPrefWidth(179);
-		colOperatingCostsSavings.setCellValueFactory(new PropertyValueFactory<>("operatingCostsSavings"));
-		table.getColumns().add(colOperatingCostsSavings);
-		TableColumn<ISolution, Double> colSimplePaybackPeriod = new TableColumn<ISolution, Double>(
-				"Simple payback period");
-		colSimplePaybackPeriod.setPrefWidth(179);
-		colSimplePaybackPeriod.setCellValueFactory(new PropertyValueFactory<>("simplePaybackPeriod"));
-		table.getColumns().add(colSimplePaybackPeriod);
-		TableColumn<ISolution, Double> colNPV = new TableColumn<ISolution, Double>(
-				"NPV");
-		colNPV.setPrefWidth(179);
-		colNPV.setCellValueFactory(new PropertyValueFactory<>("NPV"));
-		table.getColumns().add(colNPV);
-
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-
-		pane.getChildren().add(table);
-		outputTab.setContent(pane);
+		Tab outputTab = guiHelper.createOutputTab();
 		mainTabPane.getTabs().add(outputTab);
 		mainTabPane.getSelectionModel().select(outputTab);
 	}

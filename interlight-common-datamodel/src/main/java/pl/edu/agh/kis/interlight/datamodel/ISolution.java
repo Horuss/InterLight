@@ -22,6 +22,17 @@ public class ISolution {
 		this.lightMap = new HashMap<ILightPoint, ILightSource>();
 	}
 
+	public ISolution(Double energySavings, Double exploitationCostsSavings,
+			Double operatingCostsSavings, Double simplePaybackPeriod,
+			Double NPV, Map<ILightPoint, ILightSource> lightMap) {
+		this.energySavings = energySavings;
+		this.exploitationCostsSavings = exploitationCostsSavings;
+		this.operatingCostsSavings = operatingCostsSavings;
+		this.simplePaybackPeriod = simplePaybackPeriod;
+		this.NPV = NPV;
+		this.lightMap = lightMap;
+	}
+
 	public Double getEnergySavings() {
 		return energySavings;
 	}
