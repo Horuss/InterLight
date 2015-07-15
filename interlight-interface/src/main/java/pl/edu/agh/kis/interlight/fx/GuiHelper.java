@@ -398,17 +398,12 @@ public class GuiHelper {
 		table.getColumns().add(colNPV);
 
 		Map<ILightPoint, ILightSource> m = new HashMap<ILightPoint, ILightSource>();
-		m.put(new ILightPoint(new IPoint(1.0, 1.0), 1.0), new ILightSource());
-		m.put(new ILightPoint(new IPoint(2.0, 2.0), 2.0), new ILightSource());
-		m.put(new ILightPoint(new IPoint(3.0, 3.0), 3.0), new ILightSource());
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0, m));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
-		table.getItems().add(new ISolution(1.0, 1.0, 1.0, 1.0, 1.0));
+		m.put(new ILightPoint(new IPoint(1.0, 1.0), 1.0), new ILightSource("419R.IES", "50 W"));
+		m.put(new ILightPoint(new IPoint(2.0, 2.0), 2.0), new ILightSource("12AB.IES", "20 W"));
+		m.put(new ILightPoint(new IPoint(3.0, 3.0), 3.0), new ILightSource("992E.IES", "45 W"));
+		for(double i = 1.0 ; i <= 10.0 ; i += 1.0) {
+			table.getItems().add(new ISolution(i, i, i, i, i, m));
+		}
 
 		table.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<ISolution>() {
@@ -436,7 +431,7 @@ public class GuiHelper {
 		TitledPane pane = new TitledPane("Solution details", content);
 		pane.setCollapsible(false);
 
-		content.getChildren().add(new Label("TODO: some more details..."));
+		//content.getChildren().add(new Label("some more details..."));
 		content.getChildren().add(new Label("Selected light sources:"));
 		TableView<SolutionDetailsRow> table = new TableView<SolutionDetailsRow>();
 		ObservableList<SolutionDetailsRow> data = FXCollections
