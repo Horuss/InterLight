@@ -32,4 +32,9 @@ public class ILightPoint {
 		this.height = height;
 	}
 
+	@Override
+	public String toString() {
+		return "Light Point [" + point + ", height: " + height + "]";
+	}
+
 }
