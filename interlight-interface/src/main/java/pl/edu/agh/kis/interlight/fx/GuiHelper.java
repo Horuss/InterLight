@@ -225,7 +225,9 @@ public class GuiHelper {
 						.set(polygonSize + 1, (double) y);
 			}
 		});
-		canvas.getChildren().add(new BoundsAnchor(xProperty, yProperty));
+		Label boundsAnchorLabel = new Label();
+		canvas.getChildren().add(boundsAnchorLabel);
+		canvas.getChildren().add(new BoundsAnchor(xProperty, yProperty, boundsAnchorLabel));
 
 	}
 
@@ -249,7 +251,7 @@ public class GuiHelper {
 		Line rulerX = new Line(0, canvas.getPrefHeight() + 15.,
 				canvas.getPrefWidth(), canvas.getPrefHeight() + 15.);
 		canvasWrapper.getChildren().add(rulerX);
-		Label rulerX1 = new Label("0.0 m");
+		Label rulerX1 = new Label(DF.format(0.0) + " m");
 		rulerX1.setLayoutX(0);
 		rulerX1.setLayoutY(canvas.getPrefHeight() + 20.);
 		canvasWrapper.getChildren().add(rulerX1);
@@ -261,7 +263,7 @@ public class GuiHelper {
 		Line rulerY = new Line(canvas.getPrefWidth() + 15., 0,
 				canvas.getPrefWidth() + 15, canvas.getPrefHeight());
 		canvasWrapper.getChildren().add(rulerY);
-		Label rulerY1 = new Label("0.0 m");
+		Label rulerY1 = new Label(DF.format(0.0) + " m");
 		rulerY1.setLayoutX(canvas.getPrefWidth() + 20.);
 		rulerY1.setLayoutY(0);
 		canvasWrapper.getChildren().add(rulerY1);

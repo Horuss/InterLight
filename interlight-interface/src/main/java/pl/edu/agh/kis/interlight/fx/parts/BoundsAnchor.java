@@ -3,6 +3,7 @@ package pl.edu.agh.kis.interlight.fx.parts;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,11 +22,16 @@ public class BoundsAnchor extends Circle {
 	private EventHandler<MouseEvent> mouseEventDragged;
 	private EventHandler<MouseEvent> mouseEventEntered;
 	private EventHandler<MouseEvent> mouseEventExited;
+	
+	private Label label;
 
-	public BoundsAnchor(DoubleProperty x, DoubleProperty y) {
+	public BoundsAnchor(DoubleProperty x, DoubleProperty y, Label label) {
 		super(x.get(), y.get(), 5);
+		this.label = label;
 		this.x = x;
 		this.y = y;
+		updateLabel(x.get(), y.get());
+		label.setTextFill(Color.GREEN);
 		setFill(Color.GREEN.deriveColor(1, 1, 1, 0.5));
 		setStroke(Color.GREEN);
 		setStrokeWidth(1);
@@ -51,13 +57,20 @@ public class BoundsAnchor extends Circle {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				double newX = mouseEvent.getX() + dragDeltaX;
-				if (newX >= 0 && newX <= GuiHelper.CANVAS_WIDTH) {
-					setCenterX(newX);
+				if (newX < 0) {
+					newX = 0;
+				} else if (newX > GuiHelper.CANVAS_WIDTH) {
+					newX = GuiHelper.CANVAS_WIDTH;
 				}
 				double newY = mouseEvent.getY() + dragDeltaY;
-				if (newY >= 0 && newY <= GuiHelper.CANVAS_HEIGHT) {
-					setCenterY(newY);
+				if (newY < 0) {
+					newY = 0;
+				} else if (newY > GuiHelper.CANVAS_HEIGHT) {
+					newY = GuiHelper.CANVAS_HEIGHT;
 				}
+				setCenterY(newY);
+				setCenterX(newX);
+				updateLabel(newX, newY);
 				mouseEvent.consume();
 			}
 		};
@@ -92,6 +105,13 @@ public class BoundsAnchor extends Circle {
 		removeEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEventDragged);
 		removeEventHandler(MouseEvent.MOUSE_ENTERED, mouseEventEntered);
 		removeEventHandler(MouseEvent.MOUSE_EXITED, mouseEventExited);
+	}
+	
+	private void updateLabel(double x, double y) {
+		label.setLayoutX(x - 25);
+		label.setLayoutY(y - 25);
+		label.setText(GuiHelper.DF.format(x * GuiHelper.SCALE_PX_TO_M) + ", "
+				+ GuiHelper.DF.format(y * GuiHelper.SCALE_PX_TO_M));
 	}
 
 }
