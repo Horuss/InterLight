@@ -43,6 +43,7 @@ public class RoomPropertiesPanel extends AbstractPropertiesPanel {
 			public void handle(ActionEvent event) {
 				guiHelper.getSceneModel().createBounds(guiHelper.getCanvas());
 				btnFit.setDisable(false);
+				guiHelper.setHintMessage("Click to add points and drag them to move around");
 			}
 		});
 		add(btnReset, 0, 3, 2, 1);

@@ -30,10 +30,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,6 +72,7 @@ public class GuiHelper {
 
 	private Pane canvas;
 	private SceneModel sceneModel;
+	private Text hintText;
 
 	protected final PseudoClass errorClass = PseudoClass
 			.getPseudoClass("error");
@@ -197,6 +201,9 @@ public class GuiHelper {
 	}
 
 	public void addRoomPoint(Double x, Double y) {
+		
+		hideHintMessage();
+		
 		int polygonSize = sceneModel.getRoomBounds().getPoints().size();
 		sceneModel.getRoomBounds().getPoints().addAll(x, y);
 
@@ -277,8 +284,24 @@ public class GuiHelper {
 		canvas.setId("canvas");
 		canvas.setPrefHeight(GuiHelper.CANVAS_HEIGHT);
 		canvas.setPrefWidth(GuiHelper.CANVAS_WIDTH);
+		hintText = new Text();
+		hintText.setLayoutY(GuiHelper.CANVAS_HEIGHT / 4);
+		hintText.setFill(Color.GRAY);
+		hintText.setFont(Font.font(20));
+		canvas.getChildren().add(hintText);
+		setHintMessage("Click to add points and drag them to move around");
 		sceneModel.createBounds(canvas);
 		return canvas;
+	}
+	
+	public void setHintMessage(String content) {
+		hintText.setText(content);
+		hintText.setLayoutX(GuiHelper.CANVAS_WIDTH / 2 - content.length() * 5);
+		hintText.setVisible(true);
+	}
+	
+	public void hideHintMessage() {
+		hintText.setVisible(false);
 	}
 
 	public void createRectangle(ListView<AbstractSceneObject> listView) {
