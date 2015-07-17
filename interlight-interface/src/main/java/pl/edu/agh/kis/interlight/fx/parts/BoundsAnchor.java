@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 
 public class BoundsAnchor extends Circle {
@@ -60,10 +62,18 @@ public class BoundsAnchor extends Circle {
 		
 		updateLabel(this.x.get(), this.y.get());
 		label.setTextFill(Color.GREEN);
+		label.setFont(Font.font(label.getFont().getFamily(), FontWeight.BOLD, label.getFont().getSize()));
 		setFill(Color.GREEN.deriveColor(1, 1, 1, 0.5));
 		setStroke(Color.GREEN);
-		setStrokeWidth(1);
+		setStrokeWidth(2);
 		setStrokeType(StrokeType.OUTSIDE);
+		
+		if(!gh.getAnchorsList().isEmpty()) {
+			BoundsAnchor last = gh.getAnchorsList().get(gh.getAnchorsList().size() - 1);
+			last.getLabel().setFont(Font.font(last.getLabel().getFont().getFamily(), FontWeight.NORMAL, last.getLabel().getFont().getSize()));
+			last.setStrokeWidth(1);
+		}
+		
 		this.x.bind(centerXProperty());
 		this.y.bind(centerYProperty());
 		mouseEventAny = new EventHandler<MouseEvent>() {
