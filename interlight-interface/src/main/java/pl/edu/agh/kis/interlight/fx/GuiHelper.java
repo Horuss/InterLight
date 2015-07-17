@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -213,30 +211,11 @@ public class GuiHelper {
 		
 		hideHintMessage();
 		
-		int polygonSize = sceneModel.getRoomBounds().getPoints().size();
 		sceneModel.getRoomBounds().getPoints().addAll(x, y);
 
-		DoubleProperty xProperty = new SimpleDoubleProperty(x);
-		DoubleProperty yProperty = new SimpleDoubleProperty(y);
-		xProperty.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> ov,
-					Number oldX, Number x) {
-				sceneModel.getRoomBounds().getPoints()
-						.set(polygonSize, (double) x);
-			}
-		});
-		yProperty.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> ov,
-					Number oldY, Number y) {
-				sceneModel.getRoomBounds().getPoints()
-						.set(polygonSize + 1, (double) y);
-			}
-		});
 		Label boundsAnchorLabel = new Label();
 		canvas.getChildren().add(boundsAnchorLabel);
-		BoundsAnchor newAnchor = new BoundsAnchor(this, xProperty, yProperty, boundsAnchorLabel);
+		BoundsAnchor newAnchor = new BoundsAnchor(this, x, y, boundsAnchorLabel);
 		anchorsList.add(newAnchor);
 		canvas.getChildren().add(newAnchor);
 
@@ -245,7 +224,6 @@ public class GuiHelper {
 	public void removeAnchor(BoundsAnchor a) {
 		int indexOf = anchorsList.indexOf(a);
 		anchorsList.remove(indexOf);
-		//removed.removeProps();
 		canvas.getChildren().remove(a.getLabel());
 		canvas.getChildren().remove(a);
 		((Polygon)sceneModel.getRoom().getSceneObject()).getPoints().remove(indexOf * 2); 

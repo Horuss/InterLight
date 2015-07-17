@@ -1,6 +1,9 @@
 package pl.edu.agh.kis.interlight.fx.parts;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -28,13 +31,34 @@ public class BoundsAnchor extends Circle {
 	
 	private Label label;
 
-	public BoundsAnchor(GuiHelper gh, DoubleProperty x, DoubleProperty y, Label label) {
-		super(x.get(), y.get(), 5);
+	public BoundsAnchor(GuiHelper gh, double x, double y, Label label) {
+		super();
 		this.guiHelper = gh;
 		this.label = label;
-		this.x = x;
-		this.y = y;
-		updateLabel(x.get(), y.get());
+		this.x = new SimpleDoubleProperty(x);
+		this.y = new SimpleDoubleProperty(y);
+		this.x.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> ov,
+					Number oldX, Number x) {
+				gh.getSceneModel().getRoomBounds().getPoints()
+						.set(guiHelper.getAnchorsList().indexOf(BoundsAnchor.this) * 2, (double) x);
+			}
+		});
+		this.y.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> ov,
+					Number oldY, Number y) {
+				gh.getSceneModel().getRoomBounds().getPoints()
+						.set(guiHelper.getAnchorsList().indexOf(BoundsAnchor.this) * 2 + 1, (double) y);
+			}
+		});
+		
+		setCenterX(this.x.get());
+		setCenterY(this.y.get());
+		setRadius(5);
+		
+		updateLabel(this.x.get(), this.y.get());
 		label.setTextFill(Color.GREEN);
 		setFill(Color.GREEN.deriveColor(1, 1, 1, 0.5));
 		setStroke(Color.GREEN);
@@ -128,10 +152,5 @@ public class BoundsAnchor extends Circle {
 	public Label getLabel() {
 		return label;
 	}
-
-	/*public void removeProps() {
-		x.unbind();
-		y.unbind();
-	}*/
 
 }
