@@ -3,6 +3,7 @@ package pl.edu.agh.kis.interlight.fx.model;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 
@@ -30,6 +31,7 @@ public class SceneModel {
 	
 	public void createBounds(Pane canvas) {
 		canvas.getChildren().removeIf(p -> p instanceof BoundsAnchor);
+		canvas.getChildren().removeIf(p -> p instanceof Label);
 		if(getRoom().getSceneObject() != null) {
 			canvas.getChildren().remove(getRoom().getSceneObject());
 		}

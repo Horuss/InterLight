@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -27,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -69,6 +72,8 @@ public class GuiHelper {
 	public static final double DEFAULT_HEIGHT = 3.0;
 	public static double SCALE_PX_TO_M;
 	public static double SCALE_M_TO_PX;
+	
+	public static final String HINT_ROOM_INIT = "- click to add points\n- drag them to move around\n- right-click to remove";
 
 	private Pane canvas;
 	private SceneModel sceneModel;
@@ -85,11 +90,13 @@ public class GuiHelper {
 	private double orgTranslateY;
 
 	private EventHandler<MouseEvent> drawRoomHandler;
-	private ObservableList<Ies> iesList;
+	private final ObservableList<Ies> iesList;
+	private final List<BoundsAnchor> anchorsList;
 
 	public GuiHelper() {
 		sceneModel = new SceneModel();
 		iesList = createIesList();
+		anchorsList = new LinkedList<>();
 	}
 
 	public String createNewProjectName() {
@@ -158,42 +165,44 @@ public class GuiHelper {
 		this.drawRoomHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				RoomPropertiesPanel rPanel = (RoomPropertiesPanel) sceneModel
-						.getRoom().getPropertiesPanel();
-				rPanel.getBtnFit().setDisable(true);
-				int polygonSize = sceneModel.getRoomBounds().getPoints().size();
-				Double x = event.getX();
-				Double y = event.getY();
-
-				if (x < 0) {
-					x = 0.0;
-				}
-				if (y < 0) {
-					y = 0.0;
-				}
-				if (x > GuiHelper.CANVAS_WIDTH) {
-					x = GuiHelper.CANVAS_WIDTH;
-				}
-				if (y > GuiHelper.CANVAS_HEIGHT) {
-					y = GuiHelper.CANVAS_HEIGHT;
-				}
-
-				if (polygonSize > 0
-						&& rPanel.getChkAlign().selectedProperty().get()) {
-					if (Math.abs(sceneModel.getRoomBounds().getPoints()
-							.get(polygonSize - 2)
-							- x) < Math.abs(sceneModel.getRoomBounds()
-							.getPoints().get(polygonSize - 1)
-							- y)) {
-						x = sceneModel.getRoomBounds().getPoints()
-								.get(polygonSize - 2);
-					} else {
-						y = sceneModel.getRoomBounds().getPoints()
-								.get(polygonSize - 1);
+				if(event.getButton() == MouseButton.PRIMARY) {
+					RoomPropertiesPanel rPanel = (RoomPropertiesPanel) sceneModel
+							.getRoom().getPropertiesPanel();
+					rPanel.getBtnFit().setDisable(true);
+					int polygonSize = sceneModel.getRoomBounds().getPoints().size();
+					Double x = event.getX();
+					Double y = event.getY();
+	
+					if (x < 0) {
+						x = 0.0;
 					}
-
+					if (y < 0) {
+						y = 0.0;
+					}
+					if (x > GuiHelper.CANVAS_WIDTH) {
+						x = GuiHelper.CANVAS_WIDTH;
+					}
+					if (y > GuiHelper.CANVAS_HEIGHT) {
+						y = GuiHelper.CANVAS_HEIGHT;
+					}
+	
+					if (polygonSize > 0
+							&& rPanel.getChkAlign().selectedProperty().get()) {
+						if (Math.abs(sceneModel.getRoomBounds().getPoints()
+								.get(polygonSize - 2)
+								- x) < Math.abs(sceneModel.getRoomBounds()
+								.getPoints().get(polygonSize - 1)
+								- y)) {
+							x = sceneModel.getRoomBounds().getPoints()
+									.get(polygonSize - 2);
+						} else {
+							y = sceneModel.getRoomBounds().getPoints()
+									.get(polygonSize - 1);
+						}
+	
+					}
+					addRoomPoint(x, y);
 				}
-				addRoomPoint(x, y);
 				event.consume();
 			}
 		};
@@ -227,8 +236,20 @@ public class GuiHelper {
 		});
 		Label boundsAnchorLabel = new Label();
 		canvas.getChildren().add(boundsAnchorLabel);
-		canvas.getChildren().add(new BoundsAnchor(xProperty, yProperty, boundsAnchorLabel));
+		BoundsAnchor newAnchor = new BoundsAnchor(this, xProperty, yProperty, boundsAnchorLabel);
+		anchorsList.add(newAnchor);
+		canvas.getChildren().add(newAnchor);
 
+	}
+	
+	public void removeAnchor(BoundsAnchor a) {
+		int indexOf = anchorsList.indexOf(a);
+		anchorsList.remove(indexOf);
+		//removed.removeProps();
+		canvas.getChildren().remove(a.getLabel());
+		canvas.getChildren().remove(a);
+		((Polygon)sceneModel.getRoom().getSceneObject()).getPoints().remove(indexOf * 2); 
+		((Polygon)sceneModel.getRoom().getSceneObject()).getPoints().remove(indexOf * 2); 
 	}
 
 	public PseudoClass getErrorClass() {
@@ -288,17 +309,17 @@ public class GuiHelper {
 		canvas.setPrefWidth(GuiHelper.CANVAS_WIDTH);
 		hintText = new Text();
 		hintText.setLayoutY(GuiHelper.CANVAS_HEIGHT / 4);
+		hintText.setLayoutX(200);
 		hintText.setFill(Color.GRAY);
 		hintText.setFont(Font.font(20));
 		canvas.getChildren().add(hintText);
-		setHintMessage("Click to add points and drag them to move around");
+		setHintMessage(HINT_ROOM_INIT);
 		sceneModel.createBounds(canvas);
 		return canvas;
 	}
 	
 	public void setHintMessage(String content) {
 		hintText.setText(content);
-		hintText.setLayoutX(GuiHelper.CANVAS_WIDTH / 2 - content.length() * 5);
 		hintText.setVisible(true);
 	}
 	
@@ -515,6 +536,10 @@ public class GuiHelper {
 
 	public ObservableList<Ies> getIesList() {
 		return iesList;
+	}
+
+	public List<BoundsAnchor> getAnchorsList() {
+		return anchorsList;
 	}
 
 }

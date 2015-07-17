@@ -4,6 +4,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -11,6 +12,8 @@ import javafx.scene.shape.StrokeType;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 
 public class BoundsAnchor extends Circle {
+	
+	private GuiHelper guiHelper;
 
 	private Double dragDeltaX;
 	private Double dragDeltaY;
@@ -25,8 +28,9 @@ public class BoundsAnchor extends Circle {
 	
 	private Label label;
 
-	public BoundsAnchor(DoubleProperty x, DoubleProperty y, Label label) {
+	public BoundsAnchor(GuiHelper gh, DoubleProperty x, DoubleProperty y, Label label) {
 		super(x.get(), y.get(), 5);
+		this.guiHelper = gh;
 		this.label = label;
 		this.x = x;
 		this.y = y;
@@ -47,30 +51,37 @@ public class BoundsAnchor extends Circle {
 		mouseEventPressed = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
-				dragDeltaX = getCenterX() - mouseEvent.getX();
-				dragDeltaY = getCenterY() - mouseEvent.getY();
-				getScene().setCursor(Cursor.MOVE);
+				if(mouseEvent.getButton() ==  MouseButton.SECONDARY) {
+					guiHelper.removeAnchor(BoundsAnchor.this);
+				} else if(mouseEvent.getButton() ==  MouseButton.PRIMARY) {
+					dragDeltaX = getCenterX() - mouseEvent.getX();
+					dragDeltaY = getCenterY() - mouseEvent.getY();
+					getScene().setCursor(Cursor.MOVE);
+				}
 				mouseEvent.consume();
 			}
 		};
+		//TODO dragging doesn't work after deleting one node
 		mouseEventDragged = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
-				double newX = mouseEvent.getX() + dragDeltaX;
-				if (newX < 0) {
-					newX = 0;
-				} else if (newX > GuiHelper.CANVAS_WIDTH) {
-					newX = GuiHelper.CANVAS_WIDTH;
+				if(mouseEvent.getButton() ==  MouseButton.PRIMARY) {
+					double newX = mouseEvent.getX() + dragDeltaX;
+					if (newX < 0) {
+						newX = 0;
+					} else if (newX > GuiHelper.CANVAS_WIDTH) {
+						newX = GuiHelper.CANVAS_WIDTH;
+					}
+					double newY = mouseEvent.getY() + dragDeltaY;
+					if (newY < 0) {
+						newY = 0;
+					} else if (newY > GuiHelper.CANVAS_HEIGHT) {
+						newY = GuiHelper.CANVAS_HEIGHT;
+					}
+					setCenterY(newY);
+					setCenterX(newX);
+					updateLabel(newX, newY);
 				}
-				double newY = mouseEvent.getY() + dragDeltaY;
-				if (newY < 0) {
-					newY = 0;
-				} else if (newY > GuiHelper.CANVAS_HEIGHT) {
-					newY = GuiHelper.CANVAS_HEIGHT;
-				}
-				setCenterY(newY);
-				setCenterX(newX);
-				updateLabel(newX, newY);
 				mouseEvent.consume();
 			}
 		};
@@ -113,5 +124,14 @@ public class BoundsAnchor extends Circle {
 		label.setText(GuiHelper.DF.format(x * GuiHelper.SCALE_PX_TO_M) + ", "
 				+ GuiHelper.DF.format(y * GuiHelper.SCALE_PX_TO_M));
 	}
+	
+	public Label getLabel() {
+		return label;
+	}
+
+	/*public void removeProps() {
+		x.unbind();
+		y.unbind();
+	}*/
 
 }
