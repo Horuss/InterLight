@@ -213,9 +213,7 @@ public class GuiHelper {
 		
 		sceneModel.getRoomBounds().getPoints().addAll(x, y);
 
-		Label boundsAnchorLabel = new Label();
-		canvas.getChildren().add(boundsAnchorLabel);
-		BoundsAnchor newAnchor = new BoundsAnchor(this, x, y, boundsAnchorLabel);
+		BoundsAnchor newAnchor = new BoundsAnchor(this, x, y);
 		anchorsList.add(newAnchor);
 		canvas.getChildren().add(newAnchor);
 
@@ -223,7 +221,12 @@ public class GuiHelper {
 	
 	public void removeAnchor(BoundsAnchor a) {
 		int indexOf = anchorsList.indexOf(a);
+		a.updateDuringRemove();
+		canvas.getChildren().remove(a.getLengthLabelNext());
 		anchorsList.remove(indexOf);
+		if(anchorsList.size() == 1) {
+			canvas.getChildren().remove(a.getLengthLabelPrev());
+		}
 		canvas.getChildren().remove(a.getLabel());
 		canvas.getChildren().remove(a);
 		((Polygon)sceneModel.getRoom().getSceneObject()).getPoints().remove(indexOf * 2); 
