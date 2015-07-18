@@ -123,6 +123,7 @@ public class MainController {
 							ObservableValue<? extends Boolean> observable,
 							Boolean oldValue, Boolean newValue) {
 						if (newValue) {
+							guiHelper.setHintMessage("");
 							for (AbstractSceneObject aso : listView.getItems()) {
 								aso.enableEventHandlers();
 								aso.getSceneObject().toFront();
@@ -143,33 +144,46 @@ public class MainController {
 					}
 				});
 		// Light points
-		accordion.getPanes().get(2).expandedProperty()
+				accordion.getPanes().get(2).expandedProperty()
+						.addListener(new ChangeListener<Boolean>() {
+							@Override
+							public void changed(
+									ObservableValue<? extends Boolean> observable,
+									Boolean oldValue, Boolean newValue) {
+								if (newValue) {
+									guiHelper.setHintMessage("");
+									for (AbstractSceneObject aso : listViewLightPoints
+											.getItems()) {
+										aso.enableEventHandlers();
+										aso.getSceneObject().toFront();
+									}
+								} else {
+									for (AbstractSceneObject aso : listViewLightPoints
+											.getItems()) {
+										aso.getSceneObject().pseudoClassStateChanged(
+												guiHelper.getSelectedClass(), false);
+										aso.disableEventHandlers();
+										aso.getSceneObject().toBack();
+									}
+									if (guiHelper.getSceneModel().getRoomBounds() != null) {
+										guiHelper.getSceneModel().getRoomBounds()
+												.toBack();
+									}
+									listViewLightPoints.getSelectionModel()
+											.clearSelection();
+								}
+							}
+						});
+		// Light sources
+		accordion.getPanes().get(3).expandedProperty()
 				.addListener(new ChangeListener<Boolean>() {
 					@Override
 					public void changed(
 							ObservableValue<? extends Boolean> observable,
 							Boolean oldValue, Boolean newValue) {
 						if (newValue) {
-							for (AbstractSceneObject aso : listViewLightPoints
-									.getItems()) {
-								aso.enableEventHandlers();
-								aso.getSceneObject().toFront();
-							}
-						} else {
-							for (AbstractSceneObject aso : listViewLightPoints
-									.getItems()) {
-								aso.getSceneObject().pseudoClassStateChanged(
-										guiHelper.getSelectedClass(), false);
-								aso.disableEventHandlers();
-								aso.getSceneObject().toBack();
-							}
-							if (guiHelper.getSceneModel().getRoomBounds() != null) {
-								guiHelper.getSceneModel().getRoomBounds()
-										.toBack();
-							}
-							listViewLightPoints.getSelectionModel()
-									.clearSelection();
-						}
+							guiHelper.setHintMessage("");
+						} 
 					}
 				});
 
