@@ -79,6 +79,7 @@ public class LightSourcePropertiesPanel extends GridPane {
 		cmbIes.getSelectionModel().select(0);
 		cmbIes.getStyleClass().add("iesCombo");
 		cmbIes.setMaxWidth(105);
+		cmbIes.setPrefWidth(105);
 		Button addButton = new Button("+");
 		addButton.setPrefWidth(40);
 		addButton

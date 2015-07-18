@@ -153,7 +153,7 @@
                                     <VBox fx:id="lightSourcesPane" spacing="5.0">
                                        <children>
                                           <Button mnemonicParsing="false" onAction="#createLightSource" text="Add light source" />
-                                          <ListView fx:id="listViewLightSources" prefHeight="200.0" prefWidth="200.0" />
+                                          <TableView fx:id="tableViewLightSources" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                     </VBox>
                                 </content>

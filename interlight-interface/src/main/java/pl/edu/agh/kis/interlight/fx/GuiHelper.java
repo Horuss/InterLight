@@ -352,7 +352,7 @@ public class GuiHelper {
 		canvas.getChildren().add(lightPoint.getSceneObject());
 	}
 
-	public void createLightSource(ListView<LightSource> listViewLightSources) {
+	public void createLightSource() {
 		LightSource lightSource = null;
 		lightSource = new LightSource();
 		lightSource.createPropertiesPanel(this);

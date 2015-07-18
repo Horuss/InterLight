@@ -1,6 +1,7 @@
 package pl.edu.agh.kis.interlight.fx;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,14 +14,20 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 
@@ -49,7 +56,7 @@ public class MainController {
 	@FXML
 	private ListView<AbstractSceneObject> listViewLightPoints;
 	@FXML
-	private ListView<LightSource> listViewLightSources;
+	private TableView<LightSource> tableViewLightSources;
 	@FXML
 	private Accordion accordion;
 	@FXML
@@ -241,9 +248,41 @@ public class MainController {
 					}
 				});
 
-		listViewLightSources.setItems(guiHelper.getSceneModel()
+		TableColumn<LightSource, Boolean> selectedCol = new TableColumn<>("");
+		selectedCol.setEditable(true);
+		selectedCol.setResizable(false);
+		selectedCol.setPrefWidth(30);
+		selectedCol
+				.setCellValueFactory(new Callback<CellDataFeatures<LightSource, Boolean>, ObservableValue<Boolean>>() {
+					@Override
+					public ObservableValue<Boolean> call(
+							CellDataFeatures<LightSource, Boolean> p) {
+						return p.getValue().getSelected();
+					}
+				});
+		selectedCol
+				.setCellFactory(new Callback<TableColumn<LightSource, Boolean>, TableCell<LightSource, Boolean>>() {
+					@Override
+					public TableCell<LightSource, Boolean> call(
+							TableColumn<LightSource, Boolean> p) {
+						return new CheckBoxTableCell<>();
+					}
+				});
+		TableColumn<LightSource, String> nameCol = new TableColumn<>("Name");
+		nameCol.setPrefWidth(195);
+		nameCol.setCellValueFactory(new Callback<CellDataFeatures<LightSource, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(
+					CellDataFeatures<LightSource, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue()
+						.toString());
+			}
+		});
+		tableViewLightSources.getColumns().add(selectedCol);
+		tableViewLightSources.getColumns().add(nameCol);
+		tableViewLightSources.setEditable(true);
+		tableViewLightSources.setItems(guiHelper.getSceneModel()
 				.getLightSources());
-		listViewLightSources.getSelectionModel().selectedItemProperty()
+		tableViewLightSources.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<LightSource>() {
 					@Override
 					public void changed(
@@ -410,7 +449,7 @@ public class MainController {
 
 	@FXML
 	void createLightSource(ActionEvent event) {
-		guiHelper.createLightSource(listViewLightSources);
+		guiHelper.createLightSource();
 	}
 
 	@FXML
