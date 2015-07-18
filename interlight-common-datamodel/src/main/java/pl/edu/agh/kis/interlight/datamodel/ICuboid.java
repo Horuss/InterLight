@@ -19,14 +19,16 @@ public class ICuboid {
 	 * Clockwise rotation from the top-left base point (0-89)
 	 */
 	private Double rotation;
+	private Boolean workspace;
 
 	public ICuboid(IPoint pointBaseTopLeft, Double height, Double width,
-			Double length, Double rotation) {
+			Double length, Double rotation, Boolean workspace) {
 		this.pointBaseTopLeft = pointBaseTopLeft;
 		this.height = height;
 		this.width = width;
 		this.length = length;
 		this.rotation = rotation;
+		this.workspace = workspace;
 	}
 
 	public Double getHeight() {
@@ -67,6 +69,14 @@ public class ICuboid {
 
 	public void setPointBaseTopLeft(IPoint pointBaseTopLeft) {
 		this.pointBaseTopLeft = pointBaseTopLeft;
+	}
+
+	public Boolean getWorkspace() {
+		return workspace;
+	}
+
+	public void setWorkspace(Boolean workspace) {
+		this.workspace = workspace;
 	}
 
 }

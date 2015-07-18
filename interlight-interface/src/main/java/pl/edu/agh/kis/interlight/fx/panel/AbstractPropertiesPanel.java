@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.GridPane;
@@ -27,6 +28,7 @@ public abstract class AbstractPropertiesPanel extends GridPane {
 
 	protected Spinner<Double> spinHeight;
 	protected Button btnDelete;
+	protected CheckBox chkWorkspace;
 	
 	protected GuiHelper guiHelper;
 
@@ -78,6 +80,20 @@ public abstract class AbstractPropertiesPanel extends GridPane {
 			}
 		});
 		add(btnDelete, 0, gridIndex, 2, 1);
+	}
+	
+	public void createWorkspaceCheckbox(AbstractSceneObject object, int gridIndex) {
+		Label lbl = new Label("Is workspace?");
+		add(lbl, 0, gridIndex);
+		chkWorkspace = new CheckBox();
+		chkWorkspace.selectedProperty().addListener(
+				new ChangeListener<Boolean>() {
+					public void changed(ObservableValue<? extends Boolean> ov,
+							Boolean oldVal, Boolean newVal) {
+						object.setWorkspace(newVal);
+					}
+				});
+		add(chkWorkspace, 1, gridIndex);
 	}
 
 }

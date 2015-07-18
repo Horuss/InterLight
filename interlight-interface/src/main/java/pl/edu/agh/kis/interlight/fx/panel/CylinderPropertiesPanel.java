@@ -121,7 +121,8 @@ public class CylinderPropertiesPanel extends AbstractPropertiesPanel {
 					}
 				});
 
-		createDeleteButton(cylinder, 5);
+		createWorkspaceCheckbox(cylinder, 5);
+		createDeleteButton(cylinder, 6);
 	}
 
 	@Override

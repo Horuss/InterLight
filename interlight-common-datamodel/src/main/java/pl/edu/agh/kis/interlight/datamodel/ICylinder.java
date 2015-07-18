@@ -16,14 +16,16 @@ public class ICylinder {
 	 * Clockwise rotation from the center base point (0-89)
 	 */
 	private Double rotation;
+	private Boolean workspace;
 
 	public ICylinder(IPoint pointBaseCenter, Double radiusX, Double radiusY,
-			Double height, Double rotation) {
+			Double height, Double rotation, Boolean workspace) {
 		this.pointBaseCenter = pointBaseCenter;
 		this.radiusX = radiusX;
 		this.radiusY = radiusY;
 		this.height = height;
 		this.rotation = rotation;
+		this.setWorkspace(workspace);
 	}
 
 	public IPoint getPointBaseCenter() {
@@ -64,5 +66,13 @@ public class ICylinder {
 
 	public void setRotation(Double rotation) {
 		this.rotation = rotation;
+	}
+
+	public Boolean getWorkspace() {
+		return workspace;
+	}
+
+	public void setWorkspace(Boolean workspace) {
+		this.workspace = workspace;
 	}
 }

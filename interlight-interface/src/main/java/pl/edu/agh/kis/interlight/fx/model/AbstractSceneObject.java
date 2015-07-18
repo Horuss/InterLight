@@ -12,6 +12,7 @@ public abstract class AbstractSceneObject {
 
 	private final int id;
 	private Double height;
+	private Boolean workspace;
 	protected AbstractPropertiesPanel propertiesPanel;
 	protected EventHandler<MouseEvent> mousePressedEventHandler;
 	protected EventHandler<MouseEvent> mouseDraggedEventHandler;
@@ -20,6 +21,7 @@ public abstract class AbstractSceneObject {
 
 	public AbstractSceneObject() {
 		this.id = getNextId();
+		this.workspace = Boolean.FALSE;
 	}
 
 	public int getId() {
@@ -32,6 +34,14 @@ public abstract class AbstractSceneObject {
 
 	public void setHeight(Double height) {
 		this.height = height;
+	}
+	
+	public Boolean getWorkspace() {
+		return workspace;
+	}
+
+	public void setWorkspace(Boolean workspace) {
+		this.workspace = workspace;
 	}
 
 	public AbstractPropertiesPanel getPropertiesPanel() {

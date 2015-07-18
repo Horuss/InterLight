@@ -121,7 +121,8 @@ public class CuboidPropertiesPanel extends AbstractPropertiesPanel {
 					}
 				});
 
-		createDeleteButton(cuboid, 5);
+		createWorkspaceCheckbox(cuboid, 5);
+		createDeleteButton(cuboid, 6);
 	}
 
 	@Override
