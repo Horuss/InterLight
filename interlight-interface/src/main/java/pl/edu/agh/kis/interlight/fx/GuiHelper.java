@@ -358,9 +358,7 @@ public class GuiHelper {
 		LightPointNetDialog lightPointNetDialog = new LightPointNetDialog(sceneModel.getSceneWidthM(), sceneModel.getSceneLengthM());
 		Optional<LightPointNet> result = lightPointNetDialog.showAndWait();
 		if(result.isPresent()) {
-			//TODO add points (skip if extending scene bounds)
 			LightPointNet conf = result.get();
-			System.out.println(conf);
 			Integer origAmountY = new Integer(conf.getAmountY());
 			Double origMarginY = new Double(conf.getMarginY());
 			while(conf.getAmountX() > 0 && conf.getMarginX() <= sceneModel.getSceneWidthM()) {
