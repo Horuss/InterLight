@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -51,11 +52,13 @@ import pl.edu.agh.kis.interlight.fx.model.Cuboid;
 import pl.edu.agh.kis.interlight.fx.model.Cylinder;
 import pl.edu.agh.kis.interlight.fx.model.Ies;
 import pl.edu.agh.kis.interlight.fx.model.LightPoint;
+import pl.edu.agh.kis.interlight.fx.model.LightPointNet;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.SceneModel;
 import pl.edu.agh.kis.interlight.fx.model.SolutionDetailsRow;
 import pl.edu.agh.kis.interlight.fx.panel.RoomPropertiesPanel;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
+import pl.edu.agh.kis.interlight.fx.parts.LightPointNetDialog;
 
 public class GuiHelper {
 
@@ -77,9 +80,9 @@ public class GuiHelper {
 	private SceneModel sceneModel;
 	private Text hintText;
 
-	protected final PseudoClass errorClass = PseudoClass
+	public final static PseudoClass errorClass = PseudoClass
 			.getPseudoClass("error");
-	protected final PseudoClass selectedClass = PseudoClass
+	public final static PseudoClass selectedClass = PseudoClass
 			.getPseudoClass("selected");
 
 	private double orgSceneX;
@@ -342,14 +345,36 @@ public class GuiHelper {
 		canvas.getChildren().add(e);
 	}
 
-	public void createLightPoint(ListView<AbstractSceneObject> listViewLights) {
-		LightPoint lightPoint = null;
-		lightPoint = new LightPoint(sceneModel.getRoomHeightM());
+	public void createLightPoint(ListView<AbstractSceneObject> listViewLights, Double x, Double y) {
+		LightPoint lightPoint = new LightPoint(sceneModel.getRoomHeightM(), x, y);
 		lightPoint.createPropertiesPanel(this);
 		lightPoint.createEventHandlers(this, listViewLights);
 		lightPoint.enableEventHandlers();
 		sceneModel.getLightPoints().add(lightPoint);
 		canvas.getChildren().add(lightPoint.getSceneObject());
+	}
+	
+	public void createLightPointsNet(ListView<AbstractSceneObject> listViewLights) {
+		LightPointNetDialog lightPointNetDialog = new LightPointNetDialog(sceneModel.getSceneWidthM(), sceneModel.getSceneLengthM());
+		Optional<LightPointNet> result = lightPointNetDialog.showAndWait();
+		if(result.isPresent()) {
+			//TODO add points (skip if extending scene bounds)
+			LightPointNet conf = result.get();
+			System.out.println(conf);
+			Integer origAmountY = new Integer(conf.getAmountY());
+			Double origMarginY = new Double(conf.getMarginY());
+			while(conf.getAmountX() > 0 && conf.getMarginX() <= sceneModel.getSceneWidthM()) {
+				conf.setAmountY(origAmountY);
+				conf.setMarginY(origMarginY);
+				while(conf.getAmountY() > 0 && conf.getMarginY() <= sceneModel.getSceneLengthM()) {
+					createLightPoint(listViewLights, conf.getMarginX(), conf.getMarginY());
+					conf.setMarginY(conf.getMarginY() + conf.getSpacingY());
+					conf.setAmountY(conf.getAmountY() - 1);
+				}
+				conf.setMarginX(conf.getMarginX() + conf.getSpacingX());
+				conf.setAmountX(conf.getAmountX() - 1);
+			}
+		}
 	}
 
 	public void createLightSource() {

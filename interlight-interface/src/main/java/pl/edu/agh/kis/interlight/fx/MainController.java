@@ -10,6 +10,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
@@ -280,6 +281,7 @@ public class MainController {
 		tableViewLightSources.getColumns().add(selectedCol);
 		tableViewLightSources.getColumns().add(nameCol);
 		tableViewLightSources.setEditable(true);
+		tableViewLightSources.setPlaceholder(new Label(""));
 		tableViewLightSources.setItems(guiHelper.getSceneModel()
 				.getLightSources());
 		tableViewLightSources.getSelectionModel().selectedItemProperty()
@@ -353,13 +355,13 @@ public class MainController {
 							ObservableValue<? extends String> observable,
 							String oldValue, String newValue) {
 						spinRoomHeight.pseudoClassStateChanged(
-								guiHelper.errorClass, false);
+								GuiHelper.errorClass, false);
 						try {
 							Double value = Double.parseDouble(newValue);
 							guiHelper.getSceneModel().setRoomHeightM(value);
 						} catch (NumberFormatException nfe) {
 							spinRoomHeight.pseudoClassStateChanged(
-									guiHelper.errorClass, true);
+									GuiHelper.errorClass, true);
 						}
 					}
 				});
@@ -454,7 +456,12 @@ public class MainController {
 
 	@FXML
 	void createLightPoint(ActionEvent event) {
-		guiHelper.createLightPoint(listViewLightPoints);
+		guiHelper.createLightPoint(listViewLightPoints, null, null);
+	}
+	
+	@FXML
+	void createLightPointsNet(ActionEvent event) {
+		guiHelper.createLightPointsNet(listViewLightPoints);
 	}
 
 	@FXML

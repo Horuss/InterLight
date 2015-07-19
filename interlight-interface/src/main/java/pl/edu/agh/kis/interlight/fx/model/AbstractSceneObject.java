@@ -10,7 +10,7 @@ import pl.edu.agh.kis.interlight.fx.panel.AbstractPropertiesPanel;
 
 public abstract class AbstractSceneObject {
 
-	private final int id;
+	protected final int id;
 	private Double height;
 	private Boolean workspace;
 	protected AbstractPropertiesPanel propertiesPanel;

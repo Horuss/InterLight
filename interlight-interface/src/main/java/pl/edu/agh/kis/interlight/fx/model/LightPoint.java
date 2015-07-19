@@ -12,8 +12,12 @@ public class LightPoint extends AbstractSceneObject {
 	private static int nextId = 1;
 
 	private Circle circle;
-	
+
 	public LightPoint(Double height) {
+		this(height, null, null);
+	}
+
+	public LightPoint(Double height, Double x, Double y) {
 		super();
 		this.setHeight(height);
 		Circle c = new Circle();
@@ -22,8 +26,10 @@ public class LightPoint extends AbstractSceneObject {
 		c.setStrokeWidth(1);
 		c.setStrokeType(StrokeType.OUTSIDE);
 		c.getStyleClass().add("lightSrc");
-		c.setLayoutX((0.5 + this.getId() / 10.0) * GuiHelper.SCALE_M_TO_PX);
-		c.setLayoutY((0.5 + this.getId() / 10.0) * GuiHelper.SCALE_M_TO_PX);
+		c.setLayoutX(Math.min((x == null ? (0.5 + getId() / 10.0) : x)
+				* GuiHelper.SCALE_M_TO_PX, GuiHelper.CANVAS_WIDTH));
+		c.setLayoutY(Math.min((y == null ? (0.5 + getId() / 10.0) : y)
+				* GuiHelper.SCALE_M_TO_PX, GuiHelper.CANVAS_HEIGHT));
 		c.setRadius(6.0);
 		this.setCircle(c);
 	}

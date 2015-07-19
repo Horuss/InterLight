@@ -142,7 +142,12 @@
                                  <content>
                                     <VBox fx:id="lightPointsPane" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#createLightPoint" text="Add light point" />
+                                          <HBox spacing="5.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#createLightPoint" text="Single light point" />
+                                                <Button mnemonicParsing="false" onAction="#createLightPointsNet" text="Light points net" />
+                                             </children>
+                                          </HBox>
                                           <ListView fx:id="listViewLightPoints" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                     </VBox>
