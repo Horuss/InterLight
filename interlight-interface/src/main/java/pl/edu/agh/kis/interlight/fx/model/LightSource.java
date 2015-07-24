@@ -10,7 +10,7 @@ public class LightSource {
 	private static int nextId = 1;
 
 	private final int id;
-	private Double power;
+	private Integer power;
 	private Ies ies;
 	private Integer dimming;
 	private BooleanProperty selected;
@@ -46,11 +46,11 @@ public class LightSource {
 		propertiesPanel = new LightSourcePropertiesPanel(this, guiHelper);
 	}
 
-	public Double getPower() {
+	public Integer getPower() {
 		return power;
 	}
 
-	public void setPower(Double power) {
+	public void setPower(Integer power) {
 		this.power = power;
 	}
 

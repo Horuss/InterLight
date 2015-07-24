@@ -2,7 +2,6 @@ package pl.edu.agh.kis.interlight.fx.model;
 
 import javafx.scene.control.ListView;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.panel.RoomPropertiesPanel;
 
@@ -20,7 +19,7 @@ public class Room extends AbstractSceneObject {
 	}
 	
 	@Override
-	public Shape getSceneObject() {
+	public Polygon getSceneObject() {
 		return roomBounds;
 	}
 

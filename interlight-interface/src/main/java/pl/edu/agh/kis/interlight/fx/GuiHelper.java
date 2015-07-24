@@ -437,9 +437,9 @@ public class GuiHelper {
 		table.getColumns().add(colNPV);
 
 		Map<ILightPoint, ILightSource> m = new HashMap<ILightPoint, ILightSource>();
-		m.put(new ILightPoint(new IPoint(1.0, 1.0), 1.0), new ILightSource("419R.IES", "50 W"));
-		m.put(new ILightPoint(new IPoint(2.0, 2.0), 2.0), new ILightSource("12AB.IES", "20 W"));
-		m.put(new ILightPoint(new IPoint(3.0, 3.0), 3.0), new ILightSource("992E.IES", "45 W"));
+		m.put(new ILightPoint(new IPoint(1.0, 1.0), 1.0), new ILightSource("419R.IES", 50, 10));
+		m.put(new ILightPoint(new IPoint(2.0, 2.0), 2.0), new ILightSource("12AB.IES", 20, 15));
+		m.put(new ILightPoint(new IPoint(3.0, 3.0), 3.0), new ILightSource("992E.IES", 15, 20));
 		for(double i = 1.0 ; i <= 10.0 ; i += 1.0) {
 			table.getItems().add(new ISolution(i, i, i, i, i, m));
 		}

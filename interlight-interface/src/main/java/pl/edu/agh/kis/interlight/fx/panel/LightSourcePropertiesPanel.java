@@ -37,7 +37,7 @@ public class LightSourcePropertiesPanel extends GridPane {
 	
 	private GuiHelper guiHelper;
 	
-	private Spinner<Double> spinPower;
+	private Spinner<Integer> spinPower;
 	private ComboBox<Ies> cmbIes;
 	private Spinner<Integer> spinDimming;
 	private Button btnDelete;
@@ -52,7 +52,7 @@ public class LightSourcePropertiesPanel extends GridPane {
 		setPadding(new Insets(10, 10, 10, 10));
 
 		add(new Label("Power [W]:"), 0, 0);
-		spinPower = new Spinner<Double>(0.0, 1000.0, 40.0, 5.0);
+		spinPower = new Spinner<Integer>(0, 1000, 40, 5);
 		add(spinPower, 1, 0);
 		spinPower.setEditable(true);
 		spinPower.getEditor().textProperty()
@@ -63,7 +63,7 @@ public class LightSourcePropertiesPanel extends GridPane {
 							String oldValue, String newValue) {
 						spinPower.pseudoClassStateChanged(errorClass, false);
 						try {
-							Double value = Double.parseDouble(newValue);
+							Integer value = Integer.parseInt(newValue);
 							lightSource.setPower(value);
 							spinPower.getValueFactory().setValue(value);
 						} catch (NumberFormatException nfe) {
