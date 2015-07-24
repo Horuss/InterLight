@@ -93,6 +93,7 @@
                               </HBox>
                               <HBox fx:id="controlPane" spacing="15.0">
                                  <children>
+                                    <Button fx:id="btnEditJson" mnemonicParsing="false" onAction="#btnEditJson" text="TODO: EDIT JSON" />
                                     <Button fx:id="btnCalculate" mnemonicParsing="false" onAction="#calculate" text="CALCULATE">
                                        <HBox.margin>
                                           <Insets />

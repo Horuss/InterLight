@@ -82,6 +82,8 @@ public class MainController {
 	private Button btnCreateCircle;
 	@FXML
 	private Button btnCalculate;
+	@FXML 
+	private Button btnEditJson;
 
 	private GuiHelper guiHelper;
 
@@ -467,7 +469,12 @@ public class MainController {
 	@FXML
 	void openProject(ActionEvent event) {
 		// TODO
-		// listViewProjects
+		// 1. use interlight-model method to deserialize json into common-datamodel
+		// 2. convert common-datamodel to interface datamodel
+		// 3. create scene from converted objects
+		
+		// Stub:
+		// TODO
 	}
 
 	@FXML
@@ -492,9 +499,26 @@ public class MainController {
 	@FXML
 	void calculate(ActionEvent event) {
 		// TODO
-		Tab outputTab = guiHelper.createOutputTab();
+		// 1. convert gui model to common-datamodel 
+		// 2. use interlight-model method to create json scene from common-datamodel
+		// 3. use interlight-model method to create radiance input from json
+		// 4. convert radiance output to common-datamodel
+		// 5. use interlight-opt method to create solutions using json scene radiance output
+		// 6. allow to visualize each solution (radiance, heatmap)
+		
+		// Stub:
+		// TODO
+		Tab outputTab = guiHelper.createOutputTab(); //move to fxml
 		mainTabPane.getTabs().add(outputTab);
 		mainTabPane.getSelectionModel().select(outputTab);
+	}
+
+	@FXML
+	void btnEditJson(ActionEvent event) {
+		// TODO
+		// 1. convert gui model to common-datamodel 
+		// 2. use interlight-model method to create json scene from common-datamodel
+		// 3. display new window: json editor with validation functionality
 	}
 
 }
