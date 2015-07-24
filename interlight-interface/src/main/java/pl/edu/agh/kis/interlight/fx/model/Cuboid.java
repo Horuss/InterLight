@@ -5,7 +5,7 @@ import javafx.scene.shape.Shape;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.panel.CuboidPropertiesPanel;
 
-public class Cuboid extends AbstractSceneObject {
+public class Cuboid extends SceneShape {
 
 	private static int nextId = 1;
 

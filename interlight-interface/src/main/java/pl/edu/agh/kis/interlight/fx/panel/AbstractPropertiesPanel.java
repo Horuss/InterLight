@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
+import pl.edu.agh.kis.interlight.fx.model.SceneShape;
 
 public abstract class AbstractPropertiesPanel extends GridPane {
 
@@ -73,7 +74,7 @@ public abstract class AbstractPropertiesPanel extends GridPane {
 		btnDelete.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				guiHelper.getSceneModel().getObjects().remove(object);
+				guiHelper.getSceneModel().getShapes().remove(object);
 				guiHelper.getCanvas().getChildren()
 						.remove(object.getSceneObject());
 
@@ -82,7 +83,7 @@ public abstract class AbstractPropertiesPanel extends GridPane {
 		add(btnDelete, 0, gridIndex, 2, 1);
 	}
 	
-	public void createWorkspaceCheckbox(AbstractSceneObject object, int gridIndex) {
+	public void createWorkspaceCheckbox(SceneShape object, int gridIndex) {
 		Label lbl = new Label("Is workspace?");
 		add(lbl, 0, gridIndex);
 		chkWorkspace = new CheckBox();

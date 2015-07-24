@@ -12,7 +12,7 @@ public abstract class AbstractSceneObject {
 
 	protected final int id;
 	private Double height;
-	private Boolean workspace;
+
 	protected AbstractPropertiesPanel propertiesPanel;
 	protected EventHandler<MouseEvent> mousePressedEventHandler;
 	protected EventHandler<MouseEvent> mouseDraggedEventHandler;
@@ -21,7 +21,6 @@ public abstract class AbstractSceneObject {
 
 	public AbstractSceneObject() {
 		this.id = getNextId();
-		this.workspace = Boolean.FALSE;
 	}
 
 	public int getId() {
@@ -35,14 +34,6 @@ public abstract class AbstractSceneObject {
 	public void setHeight(Double height) {
 		this.height = height;
 	}
-	
-	public Boolean getWorkspace() {
-		return workspace;
-	}
-
-	public void setWorkspace(Boolean workspace) {
-		this.workspace = workspace;
-	}
 
 	public AbstractPropertiesPanel getPropertiesPanel() {
 		return propertiesPanel;
@@ -52,7 +43,8 @@ public abstract class AbstractSceneObject {
 
 	public abstract void createPropertiesPanel(GuiHelper guiHelper);
 
-	public void createEventHandlers(GuiHelper guiHelper, ListView<AbstractSceneObject> listView) {
+	public void createEventHandlers(GuiHelper guiHelper,
+			ListView<? extends AbstractSceneObject> listView) {
 		this.mousePressedEventHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -130,9 +122,7 @@ public abstract class AbstractSceneObject {
 		this.getSceneObject().getStyleClass().remove("activeLayer");
 	}
 
-	protected void selectMe(ListView<AbstractSceneObject> listView) {
-		listView.getSelectionModel().select(this);
-	}
+	protected abstract void selectMe(ListView<? extends AbstractSceneObject> listView);
 
 	public abstract int getNextId();
 

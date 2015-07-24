@@ -30,7 +30,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
+import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
+import pl.edu.agh.kis.interlight.fx.model.SceneShape;
 
 public class MainController {
 
@@ -43,7 +45,7 @@ public class MainController {
 	@FXML
 	private Button btnNewScene;
 	@FXML
-	private ListView<AbstractSceneObject> listView;
+	private ListView<SceneShape> listView;
 	@FXML
 	private TextField sceneWidth;
 	@FXML
@@ -55,7 +57,7 @@ public class MainController {
 	@FXML
 	private TextField sceneLength;
 	@FXML
-	private ListView<AbstractSceneObject> listViewLightPoints;
+	private ListView<LightPoint> listViewLightPoints;
 	@FXML
 	private TableView<LightSource> tableViewLightSources;
 	@FXML
@@ -197,7 +199,7 @@ public class MainController {
 					}
 				});
 
-		listView.setItems(guiHelper.getSceneModel().getObjects());
+		listView.setItems(guiHelper.getSceneModel().getShapes());
 		listView.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<AbstractSceneObject>() {
 					@Override

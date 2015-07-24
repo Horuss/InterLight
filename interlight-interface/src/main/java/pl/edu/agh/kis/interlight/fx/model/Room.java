@@ -1,5 +1,6 @@
 package pl.edu.agh.kis.interlight.fx.model;
 
+import javafx.scene.control.ListView;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
@@ -41,6 +42,11 @@ public class Room extends AbstractSceneObject {
 	@Override
 	protected boolean canTranslateY(Double newTranslateY) {
 		return false;
+	}
+
+	@Override
+	protected void selectMe(ListView<? extends AbstractSceneObject> listView) {
+
 	}
 
 }

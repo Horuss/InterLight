@@ -55,6 +55,7 @@ import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightPointNet;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.SceneModel;
+import pl.edu.agh.kis.interlight.fx.model.SceneShape;
 import pl.edu.agh.kis.interlight.fx.model.SolutionDetailsRow;
 import pl.edu.agh.kis.interlight.fx.panel.RoomPropertiesPanel;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
@@ -311,7 +312,7 @@ public class GuiHelper {
 		hintText.setVisible(false);
 	}
 
-	public void createRectangle(ListView<AbstractSceneObject> listView) {
+	public void createRectangle(ListView<SceneShape> listView) {
 		Cuboid cuboid = new Cuboid();
 		cuboid.setHeight(1.);
 		Rectangle r = new Rectangle();
@@ -324,11 +325,11 @@ public class GuiHelper {
 		cuboid.createPropertiesPanel(this);
 		cuboid.createEventHandlers(this, listView);
 		cuboid.enableEventHandlers();
-		sceneModel.getObjects().add(cuboid);
+		sceneModel.getShapes().add(cuboid);
 		canvas.getChildren().add(r);
 	}
 
-	public void createEllipse(ListView<AbstractSceneObject> listView) {
+	public void createEllipse(ListView<SceneShape> listView) {
 		Cylinder cylinder = new Cylinder();
 		cylinder.setHeight(1.);
 		Ellipse e = new Ellipse();
@@ -341,11 +342,11 @@ public class GuiHelper {
 		cylinder.createPropertiesPanel(this);
 		cylinder.createEventHandlers(this, listView);
 		cylinder.enableEventHandlers();
-		sceneModel.getObjects().add(cylinder);
+		sceneModel.getShapes().add(cylinder);
 		canvas.getChildren().add(e);
 	}
 
-	public void createLightPoint(ListView<AbstractSceneObject> listViewLights, Double x, Double y) {
+	public void createLightPoint(ListView<LightPoint> listViewLights, Double x, Double y) {
 		LightPoint lightPoint = new LightPoint(sceneModel.getRoomHeightM(), x, y);
 		lightPoint.createPropertiesPanel(this);
 		lightPoint.createEventHandlers(this, listViewLights);
@@ -354,7 +355,7 @@ public class GuiHelper {
 		canvas.getChildren().add(lightPoint.getSceneObject());
 	}
 	
-	public void createLightPointsNet(ListView<AbstractSceneObject> listViewLights) {
+	public void createLightPointsNet(ListView<LightPoint> listViewLights) {
 		LightPointNetDialog lightPointNetDialog = new LightPointNetDialog(sceneModel.getSceneWidthM(), sceneModel.getSceneLengthM());
 		Optional<LightPointNet> result = lightPointNetDialog.showAndWait();
 		if(result.isPresent()) {

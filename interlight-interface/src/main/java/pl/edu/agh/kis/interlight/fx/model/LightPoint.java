@@ -1,5 +1,6 @@
 package pl.edu.agh.kis.interlight.fx.model;
 
+import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -82,6 +83,12 @@ public class LightPoint extends AbstractSceneObject {
 			return false;
 		}
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void selectMe(ListView<? extends AbstractSceneObject> listView) {
+		((ListView<LightPoint>)listView).getSelectionModel().select(this);
 	}
 
 }

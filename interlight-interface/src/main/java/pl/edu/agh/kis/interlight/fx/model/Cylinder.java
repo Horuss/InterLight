@@ -5,7 +5,7 @@ import javafx.scene.shape.Shape;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.panel.CylinderPropertiesPanel;
 
-public class Cylinder extends AbstractSceneObject {
+public class Cylinder extends SceneShape {
 
 	private static int nextId = 1;
 
