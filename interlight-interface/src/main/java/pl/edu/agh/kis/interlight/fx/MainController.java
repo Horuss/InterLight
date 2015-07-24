@@ -29,6 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import pl.edu.agh.kis.interlight.datamodel.ISolution;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
 import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
@@ -77,6 +78,8 @@ public class MainController {
 	@FXML
 	private Tab tabInput;
 	@FXML
+	private Tab tabOutput;
+	@FXML
 	private HBox controlPane;
 	@FXML
 	private Button btnCreateRectangle;
@@ -86,6 +89,10 @@ public class MainController {
 	private Button btnCalculate;
 	@FXML 
 	private Button btnEditJson;
+	@FXML
+	private TableView<ISolution> tableOutput;
+	@FXML
+	private TitledPane solutionDetailsPane;
 
 	private GuiHelper guiHelper;
 
@@ -100,7 +107,9 @@ public class MainController {
 		controlPane.setVisible(false);
 		newSceneBox.setVisible(true);
 
+		mainTabPane.getSelectionModel().select(tabInput);
 		tabInput.setText("New/open scene");
+		tabOutput.setDisable(true);
 
 		for (TitledPane pane : accordion.getPanes()) {
 			pane.setExpanded(false);
@@ -510,9 +519,10 @@ public class MainController {
 		
 		// Stub:
 		// TODO
-		Tab outputTab = guiHelper.createOutputTab(); //move to fxml
-		mainTabPane.getTabs().add(outputTab);
-		mainTabPane.getSelectionModel().select(outputTab);
+		tabOutput.setDisable(false);
+		guiHelper.fillOutputTab(tableOutput, solutionDetailsPane);
+		mainTabPane.getTabs().add(tabOutput);
+		mainTabPane.getSelectionModel().select(tabOutput);
 	}
 
 	@FXML

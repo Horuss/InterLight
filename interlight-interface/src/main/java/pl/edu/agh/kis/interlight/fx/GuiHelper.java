@@ -19,11 +19,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
@@ -47,7 +45,6 @@ import pl.edu.agh.kis.interlight.datamodel.ILightPoint;
 import pl.edu.agh.kis.interlight.datamodel.ILightSource;
 import pl.edu.agh.kis.interlight.datamodel.ISolution;
 import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
-import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
 import pl.edu.agh.kis.interlight.fx.model.Cuboid;
 import pl.edu.agh.kis.interlight.fx.model.Cylinder;
 import pl.edu.agh.kis.interlight.fx.model.Ies;
@@ -405,16 +402,7 @@ public class GuiHelper {
 		}
 	}
 
-	public Tab createOutputTab() {
-		Tab outputTab = new Tab("Output");
-
-		VBox pane = new VBox(10.0);
-
-		TableView<ISolution> table = new TableView<ISolution>();
-		pane.setPadding(new Insets(20, 50, 20, 50));
-		table.setPrefWidth(900);
-		table.setMinHeight(194);
-		table.setPrefHeight(194);
+	public void fillOutputTab(TableView<ISolution> table, TitledPane detailsPane) {
 
 		TableColumn<ISolution, Double> colEnergySavings = new TableColumn<ISolution, Double>(
 				"Energy savings");
@@ -463,26 +451,19 @@ public class GuiHelper {
 							ObservableValue<? extends ISolution> observable,
 							ISolution oldValue, ISolution newValue) {
 						if (oldValue != null) {
-							pane.getChildren().remove(1);
+							detailsPane.setVisible(false);
 						}
 						if (newValue != null) {
-							pane.getChildren().add(
-									createOutputDetailsPane(newValue));
+							fillOutputDetailsPane(detailsPane, newValue);
+							detailsPane.setVisible(true);
 						}
 					}
 				});
-
-		pane.getChildren().add(table);
-		outputTab.setContent(pane);
-		return outputTab;
+		
 	}
 
-	public Node createOutputDetailsPane(ISolution solution) {
+	public void fillOutputDetailsPane(TitledPane detailsPane, ISolution solution) {
 		VBox content = new VBox(15.0);
-		TitledPane pane = new TitledPane("Solution details", content);
-		pane.setCollapsible(false);
-
-		//content.getChildren().add(new Label("some more details..."));
 		content.getChildren().add(new Label("Selected light sources:"));
 		TableView<SolutionDetailsRow> table = new TableView<SolutionDetailsRow>();
 		ObservableList<SolutionDetailsRow> data = FXCollections
@@ -504,7 +485,7 @@ public class GuiHelper {
 
 		table.setItems(data);
 		content.getChildren().add(table);
-		return pane;
+		detailsPane.setContent(content);
 	}
 
 	public double getOrgSceneX() {
