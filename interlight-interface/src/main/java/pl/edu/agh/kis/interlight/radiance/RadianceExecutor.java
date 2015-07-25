@@ -18,6 +18,7 @@ public class RadianceExecutor {
 	public static final String COMMAND_RTRACE = "rtrace";
 	public static final String COMMAND_RCALC = "rcalc";
 	public static final String COMMAND_IES2RAD = "ies2rad";
+	public static final String COMMAND_RVU = "rvu";
 
 	private CommandProvider commandProvider = new CommandProvider();
 
@@ -140,5 +141,32 @@ public class RadianceExecutor {
 		}
 		
 		return destinationDir;
+	}
+	
+	//stub
+	public void visualization() throws IOException {
+		List<String> commands = new ArrayList<String>();
+		commands.add(commandProvider
+				.createCommand(RadianceExecutor.COMMAND_RVU));
+		//observer point
+		commands.add("-vp");
+		commands.add("0");
+		commands.add("0");
+		commands.add("2.725");
+		//observer direction
+		commands.add("-vd");
+		commands.add("0.5");
+		commands.add("0.5");
+		commands.add("-0.5");
+		commands.add("room.oct");
+		ProcessBuilder builder = new ProcessBuilder(commands);
+		builder.directory(new File(commandProvider.getProjectPath("SampleProject")));
+		builder.redirectErrorStream(true);
+		Process process = builder.start();
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

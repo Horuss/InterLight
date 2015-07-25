@@ -16,6 +16,12 @@ public class CommandProvider {
 				.get(System.getProperty("user.dir") + "/lib/radiance/"
 						+ systemDir + "/").toAbsolutePath().toString();
 	}
+	
+	public String getProjectPath(String projectName) {
+		return Paths
+				.get(System.getProperty("user.dir") + "/projects/"
+						+ projectName).toAbsolutePath().toString();
+	}
 
 	public String createCommand(String command) {
 		return getCommandsPath() + File.separator + command;

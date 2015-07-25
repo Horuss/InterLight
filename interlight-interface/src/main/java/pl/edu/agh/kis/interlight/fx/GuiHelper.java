@@ -18,16 +18,25 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -57,6 +66,7 @@ import pl.edu.agh.kis.interlight.fx.model.SolutionDetailsRow;
 import pl.edu.agh.kis.interlight.fx.panel.RoomPropertiesPanel;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
 import pl.edu.agh.kis.interlight.fx.parts.LightPointNetDialog;
+import pl.edu.agh.kis.interlight.radiance.RadianceExecutor;
 
 public class GuiHelper {
 
@@ -91,8 +101,11 @@ public class GuiHelper {
 	private EventHandler<MouseEvent> drawRoomHandler;
 	private final ObservableList<Ies> iesList;
 	private final List<BoundsAnchor> anchorsList;
+	
+	private RadianceExecutor radianceExecutor;
 
 	public GuiHelper() {
+		radianceExecutor = new RadianceExecutor();
 		sceneModel = new SceneModel();
 		iesList = createIesList();
 		anchorsList = new LinkedList<>();
@@ -485,6 +498,40 @@ public class GuiHelper {
 
 		table.setItems(data);
 		content.getChildren().add(table);
+		HBox buttons = new HBox(15.0);
+		
+		//TODO only stubs now
+		Button btnVisualize = new Button("Radiance visualization");
+		btnVisualize.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					radianceExecutor.visualization();
+				} catch (IOException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("InterLight");
+					alert.setHeaderText("Error");
+					alert.setContentText(e.getMessage());
+					alert.showAndWait();
+				}
+			}
+		});
+		
+		Button btnNorm = new Button("Norm visualization");
+		btnNorm.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Dialog<Boolean> d = new Dialog<>();
+				ImageView imageView = new ImageView(new Image("img/example_vis.png"));
+				d.getDialogPane().setContent(imageView);
+				d.getDialogPane().getButtonTypes().add(ButtonType.OK);
+				d.showAndWait();
+			}
+		});
+		
+		buttons.getChildren().add(btnVisualize);
+		buttons.getChildren().add(btnNorm);
+		content.getChildren().add(buttons);
 		detailsPane.setContent(content);
 	}
 
