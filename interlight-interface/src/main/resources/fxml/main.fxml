@@ -134,7 +134,7 @@
                                                 <Button fx:id="btnCreateCircle" mnemonicParsing="false" onAction="#createCircle" text="Cylinder" />
                                              </children>
                                           </HBox>
-                                          <ListView fx:id="listView" prefHeight="200.0" prefWidth="228.0" />
+                                          <ListView fx:id="listView" prefHeight="180.0" prefWidth="228.0" />
                                        </children>
                                     </VBox>
                                  </content>

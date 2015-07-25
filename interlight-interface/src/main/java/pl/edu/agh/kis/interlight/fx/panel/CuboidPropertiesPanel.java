@@ -13,6 +13,7 @@ public class CuboidPropertiesPanel extends AbstractPropertiesPanel {
 	private Spinner<Double> spinY;
 	private Spinner<Double> spinWidth;
 	private Spinner<Double> spinLength;
+	private Spinner<Integer> spinRotation;
 
 	public CuboidPropertiesPanel(Cuboid cuboid, GuiHelper guiHelper) {
 		super(cuboid, guiHelper);
@@ -120,9 +121,31 @@ public class CuboidPropertiesPanel extends AbstractPropertiesPanel {
 						}
 					}
 				});
+		
+		add(new Label("Rotation [deg]:"), 0, 5);
+		spinRotation = new Spinner<Integer>(0, 90, 0, 1);
+		add(spinRotation, 1, 5);
+		spinRotation.setEditable(true);
+		spinRotation.getEditor().textProperty()
+				.addListener(new ChangeListener<String>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends String> observable,
+							String oldValue, String newValue) {
+						spinRotation.pseudoClassStateChanged(errorClass, false);
+						try {
+							Integer value = Integer.parseInt(newValue);
+							cuboid.getRectangle().setRotate(value);
+							spinRotation.getValueFactory().setValue(value);
+						} catch (NumberFormatException nfe) {
+							spinRotation
+									.pseudoClassStateChanged(errorClass, true);
+						}
+					}
+				});
 
-		createWorkspaceCheckbox(cuboid, 5);
-		createDeleteButton(cuboid, 6);
+		createWorkspaceCheckbox(cuboid, 6);
+		createDeleteButton(cuboid, 7);
 	}
 
 	@Override

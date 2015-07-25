@@ -13,6 +13,7 @@ public class CylinderPropertiesPanel extends AbstractPropertiesPanel {
 	private Spinner<Double> spinCenterY;
 	private Spinner<Double> spinRadiusX;
 	private Spinner<Double> spinRadiusY;
+	private Spinner<Integer> spinRotation;
 
 	public CylinderPropertiesPanel(Cylinder cylinder, GuiHelper guiHelper) {
 		super(cylinder, guiHelper);
@@ -120,9 +121,31 @@ public class CylinderPropertiesPanel extends AbstractPropertiesPanel {
 						}
 					}
 				});
+		
+		add(new Label("Rotation [deg]:"), 0, 5);
+		spinRotation = new Spinner<Integer>(0, 90, 0, 1);
+		add(spinRotation, 1, 5);
+		spinRotation.setEditable(true);
+		spinRotation.getEditor().textProperty()
+				.addListener(new ChangeListener<String>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends String> observable,
+							String oldValue, String newValue) {
+						spinRotation.pseudoClassStateChanged(errorClass, false);
+						try {
+							Integer value = Integer.parseInt(newValue);
+							cylinder.getEllipse().setRotate(value);
+							spinRotation.getValueFactory().setValue(value);
+						} catch (NumberFormatException nfe) {
+							spinRotation
+									.pseudoClassStateChanged(errorClass, true);
+						}
+					}
+				});
 
-		createWorkspaceCheckbox(cylinder, 5);
-		createDeleteButton(cylinder, 6);
+		createWorkspaceCheckbox(cylinder, 6);
+		createDeleteButton(cylinder, 7);
 	}
 
 	@Override
