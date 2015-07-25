@@ -532,7 +532,5 @@ public class MainController {
 		// 2. use interlight-model method to create json scene from common-datamodel
 		// 3. display new window: json editor with validation functionality
 	}
-	
-	// TODO cuboid & cylinder rotation
 
 }

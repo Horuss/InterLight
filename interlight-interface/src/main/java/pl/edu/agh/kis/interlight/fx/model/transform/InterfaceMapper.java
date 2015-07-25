@@ -23,7 +23,6 @@ import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.Room;
 import pl.edu.agh.kis.interlight.fx.model.SceneModel;
 
-//TODO test
 public class InterfaceMapper {
 
 	public static ICuboid map(Cuboid cuboid) {
@@ -31,8 +30,8 @@ public class InterfaceMapper {
 				* cuboid.getRectangle().getLayoutX(), GuiHelper.SCALE_PX_TO_M
 				* cuboid.getRectangle().getLayoutY()), cuboid.getHeight(),
 				GuiHelper.SCALE_PX_TO_M * cuboid.getRectangle().getWidth(),
-				cuboid.getRectangle().getHeight(), cuboid.getRectangle()
-						.getRotate(), cuboid.getWorkspace());
+				GuiHelper.SCALE_PX_TO_M * cuboid.getRectangle().getHeight(),
+				(int) cuboid.getRectangle().getRotate(), cuboid.getWorkspace());
 	}
 
 	public static Cuboid unmap(ICuboid iCuboid) {
@@ -57,7 +56,8 @@ public class InterfaceMapper {
 				* cylinder.getEllipse().getCenterY()), GuiHelper.SCALE_PX_TO_M
 				* cylinder.getEllipse().getRadiusX(), GuiHelper.SCALE_PX_TO_M
 				* cylinder.getEllipse().getRadiusY(), cylinder.getHeight(),
-				cylinder.getEllipse().getRotate(), cylinder.getWorkspace());
+				(int) cylinder.getEllipse().getRotate(),
+				cylinder.getWorkspace());
 	}
 
 	public static Cylinder unmap(ICylinder iCylinder) {
@@ -70,13 +70,14 @@ public class InterfaceMapper {
 				GuiHelper.SCALE_M_TO_PX * iCylinder.getRadiusX(),
 				GuiHelper.SCALE_M_TO_PX * iCylinder.getRadiusY());
 		ellipse.setRotate(iCylinder.getRotation());
+		cylinder.setEllipse(ellipse);
 		return cylinder;
 	}
 
 	public static ILightPoint map(LightPoint lightPoint) {
 		return new ILightPoint(new IPoint(GuiHelper.SCALE_PX_TO_M
-				* lightPoint.getCircle().getCenterX(), GuiHelper.SCALE_PX_TO_M
-				* lightPoint.getCircle().getCenterY()), lightPoint.getHeight());
+				* lightPoint.getCircle().getLayoutX(), GuiHelper.SCALE_PX_TO_M
+				* lightPoint.getCircle().getLayoutY()), lightPoint.getHeight());
 	}
 
 	public static LightPoint unmap(ILightPoint iLightPoint) {

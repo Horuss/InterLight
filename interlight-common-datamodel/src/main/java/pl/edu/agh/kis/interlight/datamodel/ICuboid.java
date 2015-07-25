@@ -18,11 +18,11 @@ public class ICuboid {
 	/**
 	 * Clockwise rotation from the top-left base point (0-89)
 	 */
-	private Double rotation;
+	private Integer rotation;
 	private Boolean workspace;
 
 	public ICuboid(IPoint pointBaseTopLeft, Double height, Double width,
-			Double length, Double rotation, Boolean workspace) {
+			Double length, Integer rotation, Boolean workspace) {
 		this.pointBaseTopLeft = pointBaseTopLeft;
 		this.height = height;
 		this.width = width;
@@ -47,11 +47,11 @@ public class ICuboid {
 		this.width = width;
 	}
 
-	public Double getRotation() {
+	public Integer getRotation() {
 		return rotation;
 	}
 
-	public void setRotation(Double rotation) {
+	public void setRotation(Integer rotation) {
 		this.rotation = rotation;
 	}
 
@@ -77,6 +77,72 @@ public class ICuboid {
 
 	public void setWorkspace(Boolean workspace) {
 		this.workspace = workspace;
+	}
+
+	@Override
+	public String toString() {
+		return "ICuboid [pointBaseTopLeft=" + pointBaseTopLeft + ", height="
+				+ height + ", width=" + width + ", length=" + length
+				+ ", rotation=" + rotation + ", workspace=" + workspace + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((height == null) ? 0 : height.hashCode());
+		result = prime * result + ((length == null) ? 0 : length.hashCode());
+		result = prime
+				* result
+				+ ((pointBaseTopLeft == null) ? 0 : pointBaseTopLeft.hashCode());
+		result = prime * result
+				+ ((rotation == null) ? 0 : rotation.hashCode());
+		result = prime * result + ((width == null) ? 0 : width.hashCode());
+		result = prime * result
+				+ ((workspace == null) ? 0 : workspace.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ICuboid other = (ICuboid) obj;
+		if (height == null) {
+			if (other.height != null)
+				return false;
+		} else if (!height.equals(other.height))
+			return false;
+		if (length == null) {
+			if (other.length != null)
+				return false;
+		} else if (!length.equals(other.length))
+			return false;
+		if (pointBaseTopLeft == null) {
+			if (other.pointBaseTopLeft != null)
+				return false;
+		} else if (!pointBaseTopLeft.equals(other.pointBaseTopLeft))
+			return false;
+		if (rotation == null) {
+			if (other.rotation != null)
+				return false;
+		} else if (!rotation.equals(other.rotation))
+			return false;
+		if (width == null) {
+			if (other.width != null)
+				return false;
+		} else if (!width.equals(other.width))
+			return false;
+		if (workspace == null) {
+			if (other.workspace != null)
+				return false;
+		} else if (!workspace.equals(other.workspace))
+			return false;
+		return true;
 	}
 
 }
