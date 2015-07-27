@@ -8,6 +8,7 @@ import pl.edu.agh.kis.interlight.datamodel.ICylinder;
 import pl.edu.agh.kis.interlight.datamodel.ILightPoint;
 import pl.edu.agh.kis.interlight.datamodel.ILightSource;
 import pl.edu.agh.kis.interlight.datamodel.IRoom;
+import pl.edu.agh.kis.interlight.datamodel.IScene;
 
 public class ISceneSet {
 
@@ -16,6 +17,15 @@ public class ISceneSet {
 	private List<ILightPoint> lightPoints = new LinkedList<>();
 	private List<ILightSource> lightSources = new LinkedList<>();
 	private IRoom room;
+	private IScene scene;
+
+	public IScene getScene() {
+		return scene;
+	}
+
+	public void setScene(IScene scene) {
+		this.scene = scene;
+	}
 
 	public IRoom getRoom() {
 		return room;
