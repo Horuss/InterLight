@@ -8,8 +8,9 @@ public class IesProfile {
 	private double[] horizontalAngles;
 	private double[][] lumenValues;
 
-	public IesProfile(String name) {
+	public IesProfile(String name, double power) {
 		this.name = name;
+		this.power = power;
 	}
 
 	public String getName() {

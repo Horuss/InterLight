@@ -86,14 +86,12 @@ public class InterfaceMapper {
 
 	public static ILightSource map(LightSource lightSource) {
 		return new ILightSource(lightSource.getIes().getName(),
-				lightSource.getPower(), lightSource.getDimming());
+				lightSource.getIes().getPower());
 	}
 
 	public static LightSource unmap(ILightSource iLightSource) {
 		LightSource lightSource = new LightSource();
-		lightSource.setPower(iLightSource.getPower());
-		lightSource.setDimming(iLightSource.getDimming());
-		lightSource.setIes(new IesProfile(iLightSource.getIes()));
+		lightSource.setIes(new IesProfile(iLightSource.getIes(), iLightSource.getPower()));
 		return lightSource;
 	}
 

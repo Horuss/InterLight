@@ -33,8 +33,7 @@ public class InterfaceMapperTest {
 	private static final int R = 8;
 	private static final boolean WS = true;
 	private static final String S = "0755FR.ies";
-	private static final int P = 9;
-	private static final int D = 10;
+	private static final double P = 9.0;
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -88,7 +87,7 @@ public class InterfaceMapperTest {
 	public void mapLightSourceTest() {
 
 		// given
-		ILightSource iLightSource = new ILightSource(S, P, D);
+		ILightSource iLightSource = new ILightSource(S, P);
 
 		// when
 		LightSource lightSource = InterfaceMapper.unmap(iLightSource);

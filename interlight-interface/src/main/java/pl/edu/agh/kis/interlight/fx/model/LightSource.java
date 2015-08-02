@@ -11,15 +11,13 @@ public class LightSource {
 	private static int nextId = 1;
 
 	private final int id;
-	private Integer power;
 	private IesProfile ies;
-	private Integer dimming;
 	private BooleanProperty selected;
 	private LightSourcePropertiesPanel propertiesPanel;
 
 	public LightSource() {
 		this.id = getNextId();
-		this.selected = new SimpleBooleanProperty(true);
+		this.selected = new SimpleBooleanProperty(false);
 	}
 
 	public int getId() {
@@ -32,7 +30,7 @@ public class LightSource {
 
 	@Override
 	public String toString() {
-		return "LightSource " + getId() + " [IES]";
+		return ies.getName();
 	}
 
 	public IesProfile getIes() {
@@ -45,22 +43,6 @@ public class LightSource {
 
 	public void createPropertiesPanel(GuiHelper guiHelper) {
 		propertiesPanel = new LightSourcePropertiesPanel(this, guiHelper);
-	}
-
-	public Integer getPower() {
-		return power;
-	}
-
-	public void setPower(Integer power) {
-		this.power = power;
-	}
-
-	public Integer getDimming() {
-		return dimming;
-	}
-
-	public void setDimming(Integer dimming) {
-		this.dimming = dimming;
 	}
 
 	public LightSourcePropertiesPanel getPropertiesPanel() {

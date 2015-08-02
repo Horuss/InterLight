@@ -52,8 +52,7 @@ public class IesParser {
 				}
 			}
 
-			IesProfile iesProfile = new IesProfile(path.getFileName().toString());
-			iesProfile.setPower(power);
+			IesProfile iesProfile = new IesProfile(path.getFileName().toString(), power);
 			iesProfile.setHorizontalAngles(horizontalAngles);
 			iesProfile.setVerticalAngles(verticalAngles);
 			iesProfile.setLumenValues(lumens);

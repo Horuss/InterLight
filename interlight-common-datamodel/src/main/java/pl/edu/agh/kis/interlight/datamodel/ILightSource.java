@@ -3,16 +3,11 @@ package pl.edu.agh.kis.interlight.datamodel;
 public class ILightSource {
 
 	private String ies;
-	private Integer power;
-	/**
-	 * Percentage in natural numbers (0-100)
-	 */
-	private Integer dimming;
+	private Double power;
 
-	public ILightSource(String ies, Integer power, Integer dimming) {
+	public ILightSource(String ies, Double power) {
 		this.ies = ies;
 		this.power = power;
-		this.dimming = dimming;
 	}
 
 	public String getIes() {
@@ -23,33 +18,23 @@ public class ILightSource {
 		this.ies = ies;
 	}
 
-	public Integer getPower() {
+	public Double getPower() {
 		return power;
 	}
 
-	public void setPower(Integer power) {
+	public void setPower(Double power) {
 		this.power = power;
-	}
-
-	public Integer getDimming() {
-		return dimming;
-	}
-
-	public void setDimming(Integer dimming) {
-		this.dimming = dimming;
 	}
 
 	@Override
 	public String toString() {
-		return "Light Source [ies: " + ies + ", power: " + power
-				+ ", dimming: " + dimming + "]";
+		return "Light Source [ies: " + ies + ", power: " + power + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dimming == null) ? 0 : dimming.hashCode());
 		result = prime * result + ((ies == null) ? 0 : ies.hashCode());
 		result = prime * result + ((power == null) ? 0 : power.hashCode());
 		return result;
@@ -64,11 +49,6 @@ public class ILightSource {
 		if (getClass() != obj.getClass())
 			return false;
 		ILightSource other = (ILightSource) obj;
-		if (dimming == null) {
-			if (other.dimming != null)
-				return false;
-		} else if (!dimming.equals(other.dimming))
-			return false;
 		if (ies == null) {
 			if (other.ies != null)
 				return false;

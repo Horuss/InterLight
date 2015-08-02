@@ -1,5 +1,6 @@
 package pl.edu.agh.kis.interlight.fx;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -46,6 +47,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -100,7 +102,6 @@ public class GuiHelper {
 	private double orgTranslateY;
 
 	private EventHandler<MouseEvent> drawRoomHandler;
-	private final ObservableList<IesProfile> iesList;
 	private final List<BoundsAnchor> anchorsList;
 	
 	private RadianceExecutor radianceExecutor;
@@ -108,7 +109,7 @@ public class GuiHelper {
 	public GuiHelper() {
 		radianceExecutor = new RadianceExecutor();
 		sceneModel = new SceneModel();
-		iesList = createIesList();
+		loadIesList();
 		anchorsList = new LinkedList<>();
 	}
 
@@ -140,18 +141,19 @@ public class GuiHelper {
 		return list;
 	}
 
-	private ObservableList<IesProfile> createIesList() {
-		ObservableList<IesProfile> list = FXCollections.observableArrayList();
+	private void loadIesList() {
 		try (DirectoryStream<Path> directoryStream = Files
 				.newDirectoryStream(Paths.get(USER_DIR + "/res/ies/"))) {
 			for (Path path : directoryStream) {
 				IesProfile ies = IesParser.parse(path);
-				list.add(ies);
+				LightSource lightSource = new LightSource();
+				lightSource.setIes(ies);
+				lightSource.createPropertiesPanel(this);
+				sceneModel.getLightSources().add(lightSource);
 			}
 		} catch (IOException ex) {
 			logger.error("Error creating IES list");
 		}
-		return list;
 	}
 
 	public Pane getCanvas() {
@@ -388,10 +390,44 @@ public class GuiHelper {
 	}
 
 	public void createLightSource() {
-		LightSource lightSource = null;
-		lightSource = new LightSource();
-		lightSource.createPropertiesPanel(this);
-		sceneModel.getLightSources().add(lightSource);
+		
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Add IES file...");
+		fileChooser.setInitialDirectory(new File(System
+				.getProperty("user.home")));
+		fileChooser.getExtensionFilters()
+				.add(new FileChooser.ExtensionFilter("IES file",
+						"*.ies"));
+		File iesFile = fileChooser.showOpenDialog(canvas.getScene()
+				.getWindow());
+		try {
+			String fileName = iesFile.getName();
+			if (Files.exists(Paths.get(System
+					.getProperty("user.dir")
+					+ "/res/ies/"
+					+ iesFile.getName()))) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("IES file error");
+				alert.setHeaderText("IES file name error");
+				alert.setContentText("There is already an IES file with that name in InterLight resources");
+				alert.showAndWait();
+			} else {
+				Path copy = Files.copy(
+						iesFile.toPath(),
+						Paths.get(System.getProperty("user.dir")
+								+ "/res/ies/" + fileName));
+				IesProfile ies = IesParser.parse(copy);
+				
+				LightSource lightSource = new LightSource();
+				lightSource.setIes(ies);
+				lightSource.createPropertiesPanel(this);
+				sceneModel.getLightSources().add(lightSource);
+				
+			}
+		} catch (Exception ex) {
+			logger.error("Error copying new IES file");
+		}
+		
 	}
 
 	public void enableRoomEditing() {
@@ -451,9 +487,9 @@ public class GuiHelper {
 		table.getColumns().add(colNPV);
 
 		Map<ILightPoint, ILightSource> m = new HashMap<ILightPoint, ILightSource>();
-		m.put(new ILightPoint(new IPoint(1.0, 1.0), 1.0), new ILightSource("419R.IES", 50, 10));
-		m.put(new ILightPoint(new IPoint(2.0, 2.0), 2.0), new ILightSource("12AB.IES", 20, 15));
-		m.put(new ILightPoint(new IPoint(3.0, 3.0), 3.0), new ILightSource("992E.IES", 15, 20));
+		m.put(new ILightPoint(new IPoint(1.0, 1.0), 1.0), new ILightSource("419R.IES", 50.0));
+		m.put(new ILightPoint(new IPoint(2.0, 2.0), 2.0), new ILightSource("12AB.IES", 20.0));
+		m.put(new ILightPoint(new IPoint(3.0, 3.0), 3.0), new ILightSource("992E.IES", 15.0));
 		for(double i = 1.0 ; i <= 10.0 ; i += 1.0) {
 			table.getItems().add(new ISolution(i, i, i, i, i, m));
 		}
@@ -566,10 +602,6 @@ public class GuiHelper {
 
 	public void setOrgTranslateY(double orgTranslateY) {
 		this.orgTranslateY = orgTranslateY;
-	}
-
-	public ObservableList<IesProfile> getIesList() {
-		return iesList;
 	}
 
 	public List<BoundsAnchor> getAnchorsList() {
