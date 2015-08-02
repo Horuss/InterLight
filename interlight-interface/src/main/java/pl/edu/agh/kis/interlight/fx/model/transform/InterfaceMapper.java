@@ -1,6 +1,5 @@
 package pl.edu.agh.kis.interlight.fx.model.transform;
 
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,11 +16,11 @@ import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.model.Cuboid;
 import pl.edu.agh.kis.interlight.fx.model.Cylinder;
-import pl.edu.agh.kis.interlight.fx.model.Ies;
 import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.Room;
 import pl.edu.agh.kis.interlight.fx.model.SceneModel;
+import pl.edu.agh.kis.interlight.ies.IesProfile;
 
 public class InterfaceMapper {
 
@@ -86,15 +85,15 @@ public class InterfaceMapper {
 	}
 
 	public static ILightSource map(LightSource lightSource) {
-		return new ILightSource(lightSource.getIes().getIesFile().getFileName()
-				.toString(), lightSource.getPower(), lightSource.getDimming());
+		return new ILightSource(lightSource.getIes().getName(),
+				lightSource.getPower(), lightSource.getDimming());
 	}
 
 	public static LightSource unmap(ILightSource iLightSource) {
 		LightSource lightSource = new LightSource();
 		lightSource.setPower(iLightSource.getPower());
 		lightSource.setDimming(iLightSource.getDimming());
-		lightSource.setIes(new Ies(Paths.get(iLightSource.getIes())));
+		lightSource.setIes(new IesProfile(iLightSource.getIes()));
 		return lightSource;
 	}
 

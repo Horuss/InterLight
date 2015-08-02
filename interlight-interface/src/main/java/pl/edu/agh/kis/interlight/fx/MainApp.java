@@ -35,9 +35,5 @@ public class MainApp extends Application {
 
 		logger.info("Application 'InterLight' started");
 
-		// TEST
-		// RadianceExecutor radianceExecutor = new RadianceExecutor();
-		// radianceExecutor.createTempOctalTree(Paths.get("D:/Programowanie/Java/_EclipseWorkspace/_mgr/InterLight/interlight-interface/src/test/resources/radiance/room.rad"));
-
 	}
 }

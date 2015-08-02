@@ -56,7 +56,6 @@ import pl.edu.agh.kis.interlight.datamodel.ISolution;
 import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
 import pl.edu.agh.kis.interlight.fx.model.Cuboid;
 import pl.edu.agh.kis.interlight.fx.model.Cylinder;
-import pl.edu.agh.kis.interlight.fx.model.Ies;
 import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightPointNet;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
@@ -66,6 +65,8 @@ import pl.edu.agh.kis.interlight.fx.model.SolutionDetailsRow;
 import pl.edu.agh.kis.interlight.fx.panel.RoomPropertiesPanel;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
 import pl.edu.agh.kis.interlight.fx.parts.LightPointNetDialog;
+import pl.edu.agh.kis.interlight.ies.IesParser;
+import pl.edu.agh.kis.interlight.ies.IesProfile;
 import pl.edu.agh.kis.interlight.radiance.RadianceExecutor;
 
 public class GuiHelper {
@@ -99,7 +100,7 @@ public class GuiHelper {
 	private double orgTranslateY;
 
 	private EventHandler<MouseEvent> drawRoomHandler;
-	private final ObservableList<Ies> iesList;
+	private final ObservableList<IesProfile> iesList;
 	private final List<BoundsAnchor> anchorsList;
 	
 	private RadianceExecutor radianceExecutor;
@@ -139,12 +140,12 @@ public class GuiHelper {
 		return list;
 	}
 
-	private ObservableList<Ies> createIesList() {
-		ObservableList<Ies> list = FXCollections.observableArrayList();
+	private ObservableList<IesProfile> createIesList() {
+		ObservableList<IesProfile> list = FXCollections.observableArrayList();
 		try (DirectoryStream<Path> directoryStream = Files
 				.newDirectoryStream(Paths.get(USER_DIR + "/res/ies/"))) {
 			for (Path path : directoryStream) {
-				Ies ies = new Ies(path);
+				IesProfile ies = IesParser.parse(path);
 				list.add(ies);
 			}
 		} catch (IOException ex) {
@@ -567,7 +568,7 @@ public class GuiHelper {
 		this.orgTranslateY = orgTranslateY;
 	}
 
-	public ObservableList<Ies> getIesList() {
+	public ObservableList<IesProfile> getIesList() {
 		return iesList;
 	}
 

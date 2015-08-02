@@ -32,7 +32,7 @@ public class InterfaceMapperTest {
 	private static final double RY = 7.0;
 	private static final int R = 8;
 	private static final boolean WS = true;
-	private static final String S = "xxx";
+	private static final String S = "0755FR.ies";
 	private static final int P = 9;
 	private static final int D = 10;
 

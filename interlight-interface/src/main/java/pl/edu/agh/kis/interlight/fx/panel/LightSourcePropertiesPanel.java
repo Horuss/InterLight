@@ -5,9 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
@@ -16,36 +13,40 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
-import pl.edu.agh.kis.interlight.fx.model.Ies;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
+import pl.edu.agh.kis.interlight.ies.IesParser;
+import pl.edu.agh.kis.interlight.ies.IesProfile;
 
 public class LightSourcePropertiesPanel extends GridPane {
 
 	private static final Logger logger = LogManager
 			.getLogger(LightSourcePropertiesPanel.class.getName());
-	private final PseudoClass errorClass = PseudoClass
-			.getPseudoClass("error");
-	
+	private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
+
 	private GuiHelper guiHelper;
-	
+
 	private Spinner<Integer> spinPower;
-	private ComboBox<Ies> cmbIes;
+	private ComboBox<IesProfile> cmbIes;
 	private Spinner<Integer> spinDimming;
 	private Button btnDelete;
 
 	public LightSourcePropertiesPanel(LightSource lightSource,
 			GuiHelper guiHelper) {
 		this.guiHelper = guiHelper;
-		
+
 		setAlignment(Pos.CENTER);
 		setHgap(10);
 		setVgap(10);
@@ -71,10 +72,10 @@ public class LightSourcePropertiesPanel extends GridPane {
 						}
 					}
 				});
-		
+
 		add(new Label("IES:"), 0, 1);
 		HBox cmbPane = new HBox();
-		cmbIes = new ComboBox<Ies>();
+		cmbIes = new ComboBox<IesProfile>();
 		cmbIes.setItems(guiHelper.getIesList());
 		cmbIes.getSelectionModel().select(0);
 		cmbIes.getStyleClass().add("iesCombo");
@@ -109,7 +110,7 @@ public class LightSourcePropertiesPanel extends GridPane {
 									iesFile.toPath(),
 									Paths.get(System.getProperty("user.dir")
 											+ "/res/ies/" + fileName));
-							Ies ies = new Ies(copy);
+							IesProfile ies = IesParser.parse(copy);
 							cmbIes.getItems().add(ies);
 							cmbIes.getSelectionModel().select(ies);
 						}

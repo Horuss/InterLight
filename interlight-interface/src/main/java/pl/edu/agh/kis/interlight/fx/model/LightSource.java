@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.panel.LightSourcePropertiesPanel;
+import pl.edu.agh.kis.interlight.ies.IesProfile;
 
 public class LightSource {
 
@@ -11,7 +12,7 @@ public class LightSource {
 
 	private final int id;
 	private Integer power;
-	private Ies ies;
+	private IesProfile ies;
 	private Integer dimming;
 	private BooleanProperty selected;
 	private LightSourcePropertiesPanel propertiesPanel;
@@ -34,11 +35,11 @@ public class LightSource {
 		return "LightSource " + getId() + " [IES]";
 	}
 
-	public Ies getIes() {
+	public IesProfile getIes() {
 		return ies;
 	}
 
-	public void setIes(Ies ies) {
+	public void setIes(IesProfile ies) {
 		this.ies = ies;
 	}
 
