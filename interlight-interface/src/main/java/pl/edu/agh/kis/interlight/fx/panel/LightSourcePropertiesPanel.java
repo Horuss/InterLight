@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
+import pl.edu.agh.kis.interlight.fx.parts.LuminousIntensityPolarDiagram;
 
 public class LightSourcePropertiesPanel extends GridPane {
 
@@ -46,7 +47,12 @@ public class LightSourcePropertiesPanel extends GridPane {
 				}
 			}
 		});
-		add(btnDelete, 0, 1, 2, 1);
+
+		LuminousIntensityPolarDiagram luminousIntensityPolarDiagram = new LuminousIntensityPolarDiagram(
+				lightSource.getIes());
+		add(luminousIntensityPolarDiagram.getChartViewer(), 0, 1);
+
+		add(btnDelete, 0, 2, 2, 1);
 	}
 
 	public GuiHelper getGuiHelper() {

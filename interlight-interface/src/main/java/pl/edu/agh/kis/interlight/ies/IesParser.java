@@ -26,7 +26,7 @@ public class IesParser {
 			sc.nextDouble(); // candela multiplier
 			int verticalAnglesCount = (int) Math.round(sc.nextDouble());
 			int horizontalAnglesCount = (int) Math.round(sc.nextDouble());
-			sc.nextDouble(); // photometric type
+			int photometricType = (int) Math.round(sc.nextDouble());
 			sc.nextDouble(); // units type
 			sc.nextDouble(); // width
 			sc.nextDouble(); // length
@@ -34,6 +34,8 @@ public class IesParser {
 			sc.nextDouble(); // ballast factor
 			sc.nextDouble(); // future use
 			double power = sc.nextDouble();
+			
+			//TODO handle "type" here (symmetry - see IES spec)
 
 			double[] verticalAngles = new double[verticalAnglesCount];
 			for (int i = 0; i < verticalAnglesCount; i++) {
