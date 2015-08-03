@@ -20,7 +20,7 @@ public class LuminousIntensityPolarDiagram {
 
 		for (int i = 0; i < iesProfile.getHorizontalAngles().length; i++) {
 			if (iesProfile.getHorizontalAngles()[i] % 90 == 0) {
-				XYSeries series = new XYSeries("aa");
+				XYSeries series = new XYSeries("Series " + i);
 				for (int j = 0; j < iesProfile.getVerticalAngles().length; j++) {
 					series.add(iesProfile.getVerticalAngles()[j],
 							iesProfile.getLumenValues()[i][j]);

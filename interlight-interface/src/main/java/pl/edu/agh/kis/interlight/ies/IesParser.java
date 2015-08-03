@@ -1,15 +1,10 @@
 package pl.edu.agh.kis.interlight.ies;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Scanner;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class IesParser {
-
-	private static final Logger log = LogManager.getLogger(IesParser.class
-			.getName());
 
 	public static IesProfile parse(Path path) {
 
@@ -26,7 +21,7 @@ public class IesParser {
 			sc.nextDouble(); // candela multiplier
 			int verticalAnglesCount = (int) Math.round(sc.nextDouble());
 			int horizontalAnglesCount = (int) Math.round(sc.nextDouble());
-			int photometricType = (int) Math.round(sc.nextDouble());
+			sc.nextDouble(); // photometric type
 			sc.nextDouble(); // units type
 			sc.nextDouble(); // width
 			sc.nextDouble(); // length
@@ -34,12 +29,27 @@ public class IesParser {
 			sc.nextDouble(); // ballast factor
 			sc.nextDouble(); // future use
 			double power = sc.nextDouble();
-			
-			//TODO handle "type" here (symmetry - see IES spec)
 
 			double[] verticalAngles = new double[verticalAnglesCount];
 			for (int i = 0; i < verticalAnglesCount; i++) {
 				verticalAngles[i] = sc.nextDouble();
+			}
+			double sym = verticalAngles[verticalAngles.length - 1];
+			if (verticalAnglesCount == 1) {
+				verticalAngles = new double[360];
+				for (int i = 0; i < 360; i++) {
+					verticalAngles[i] = (double) i;
+				}
+			} else if (sym != 360.0) {
+				double diff = verticalAngles[1] - verticalAngles[0];
+				verticalAngles = Arrays.copyOf(verticalAngles,
+						(int) Math.round(360 / diff) + 1);
+				int i = verticalAnglesCount;
+				while (verticalAngles[i - 1] + diff != 360.0) {
+					verticalAngles[i] = verticalAngles[i - 1] + diff;
+					i++;
+				}
+				verticalAngles[i] = 360.0;
 			}
 
 			double[] horizontalAngles = new double[horizontalAnglesCount];
@@ -47,21 +57,30 @@ public class IesParser {
 				horizontalAngles[j] = sc.nextDouble();
 			}
 
-			double[][] lumens = new double[horizontalAnglesCount][verticalAnglesCount];
+			double[][] lumens = new double[horizontalAnglesCount][verticalAngles.length];
 			for (int i = 0; i < horizontalAnglesCount; i++) {
 				for (int j = 0; j < verticalAnglesCount; j++) {
 					lumens[i][j] = sc.nextDouble();
 				}
+				if (sym == 90.0) {
+					for (int j = verticalAnglesCount * 4 - 4, k = 0; verticalAngles[j] >= 270.0; j--, k++) {
+						System.out.println(verticalAngles[j] + " - "
+								+ lumens[i][k]);
+						lumens[i][j] = lumens[i][k];
+					}
+				}
+				// TODO symmetry for 180
 			}
 
-			IesProfile iesProfile = new IesProfile(path.getFileName().toString(), power);
+			IesProfile iesProfile = new IesProfile(path.getFileName()
+					.toString(), power);
 			iesProfile.setHorizontalAngles(horizontalAngles);
 			iesProfile.setVerticalAngles(verticalAngles);
 			iesProfile.setLumenValues(lumens);
 			return iesProfile;
 
 		} catch (Exception e) {
-			log.error(e);
+			e.printStackTrace();
 		}
 
 		return null;

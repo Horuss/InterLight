@@ -426,6 +426,7 @@ public class GuiHelper {
 			}
 		} catch (Exception ex) {
 			logger.error("Error copying new IES file");
+			ex.printStackTrace();
 		}
 		
 	}
