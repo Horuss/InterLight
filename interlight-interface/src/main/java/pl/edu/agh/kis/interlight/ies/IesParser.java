@@ -64,12 +64,15 @@ public class IesParser {
 				}
 				if (sym == 90.0) {
 					for (int j = verticalAnglesCount * 4 - 4, k = 0; verticalAngles[j] >= 270.0; j--, k++) {
-						System.out.println(verticalAngles[j] + " - "
-								+ lumens[i][k]);
 						lumens[i][j] = lumens[i][k];
 					}
+				} else if (sym == 180.0) {
+					for (int j = verticalAnglesCount, k = 2; j <= verticalAnglesCount * 2 - 2; j++, k++) {
+						System.out.println(verticalAngles[j] + " - "
+								+ lumens[i][verticalAnglesCount - k]);
+						lumens[i][j] = lumens[i][verticalAnglesCount - k];
+					}
 				}
-				// TODO symmetry for 180
 			}
 
 			IesProfile iesProfile = new IesProfile(path.getFileName()
