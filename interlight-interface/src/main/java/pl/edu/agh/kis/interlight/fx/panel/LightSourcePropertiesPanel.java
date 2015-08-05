@@ -10,6 +10,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
@@ -32,8 +34,14 @@ public class LightSourcePropertiesPanel extends GridPane {
 
 		add(new Label("Power: " + lightSource.getIes().getPower() + " W"), 0, 0);
 
+		LuminousIntensityPolarDiagram luminousIntensityPolarDiagram = new LuminousIntensityPolarDiagram(
+				lightSource.getIes());
+		add(luminousIntensityPolarDiagram.getChartViewer(), 0, 1);
+		
 		btnDelete = new Button("Delete");
 		btnDelete.setPrefWidth(Double.MAX_VALUE);
+		btnDelete.setGraphic(new ImageView(new Image(getClass()
+				.getClassLoader().getResourceAsStream("img/16delete.png"))));
 		btnDelete.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -47,11 +55,6 @@ public class LightSourcePropertiesPanel extends GridPane {
 				}
 			}
 		});
-
-		LuminousIntensityPolarDiagram luminousIntensityPolarDiagram = new LuminousIntensityPolarDiagram(
-				lightSource.getIes());
-		add(luminousIntensityPolarDiagram.getChartViewer(), 0, 1);
-
 		add(btnDelete, 0, 2, 2, 1);
 	}
 

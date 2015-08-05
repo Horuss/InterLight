@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import org.apache.logging.log4j.LogManager;
@@ -71,6 +73,8 @@ public abstract class AbstractPropertiesPanel extends GridPane {
 	public void createDeleteButton(AbstractSceneObject object, int gridIndex) {
 		btnDelete = new Button("Delete");
 		btnDelete.setPrefWidth(Double.MAX_VALUE);
+		btnDelete.setGraphic(new ImageView(new Image(getClass()
+				.getClassLoader().getResourceAsStream("img/16delete.png"))));
 		btnDelete.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

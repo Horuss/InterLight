@@ -5,6 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.model.Room;
 
@@ -34,6 +36,8 @@ public class RoomPropertiesPanel extends AbstractPropertiesPanel {
 				btnFit.setDisable(true);
 			}
 		});
+		btnFit.setGraphic(new ImageView(new Image(getClass()
+				.getClassLoader().getResourceAsStream("img/16arrow_out.png"))));
 		add(btnFit, 0, 2, 2, 1);
 		
 		btnReset = new Button("Reset room");
@@ -47,6 +51,8 @@ public class RoomPropertiesPanel extends AbstractPropertiesPanel {
 				guiHelper.setHintMessage(GuiHelper.HINT_ROOM_INIT);
 			}
 		});
+		btnReset.setGraphic(new ImageView(new Image(getClass()
+				.getClassLoader().getResourceAsStream("img/16delete.png"))));
 		add(btnReset, 0, 3, 2, 1);
 		
 	}

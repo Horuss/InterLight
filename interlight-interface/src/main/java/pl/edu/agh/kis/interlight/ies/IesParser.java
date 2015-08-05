@@ -68,8 +68,6 @@ public class IesParser {
 					}
 				} else if (sym == 180.0) {
 					for (int j = verticalAnglesCount, k = 2; j <= verticalAnglesCount * 2 - 2; j++, k++) {
-						System.out.println(verticalAngles[j] + " - "
-								+ lumens[i][verticalAnglesCount - k]);
 						lumens[i][j] = lumens[i][verticalAnglesCount - k];
 					}
 				}

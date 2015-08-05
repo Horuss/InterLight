@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -12,13 +13,34 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#menuNewOpen" text="New/Open" />
-              <MenuItem mnemonicParsing="false" onAction="#menuClose" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuNewOpen" text="New/Open">
+                     <graphic>
+                        <ImageView pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@../img/16class_module.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+              <MenuItem mnemonicParsing="false" onAction="#menuClose" text="Close">
+                     <graphic>
+                        <ImageView pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@../img/16door_in.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#menuAbout" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#menuAbout" text="About">
+                     <graphic>
+                        <ImageView pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@../img/16information.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
         </menus>
@@ -54,7 +76,14 @@
                                           </Label>
                                           <Label text="Canvas width [m]:" GridPane.rowIndex="2" />
                                           <Label text="Canvas length [m]:" GridPane.rowIndex="3" />
-                                          <Button fx:id="btnNewScene" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newScene" text="Create" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                                          <Button fx:id="btnNewScene" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newScene" text="Create" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                             <graphic>
+                                                <ImageView pickOnBounds="true" smooth="false">
+                                                   <image>
+                                                      <Image url="@../img/16page_add.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic></Button>
                                           <TextField fx:id="sceneWidth" text="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="sceneLength" text="3.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Label text="Project name:" GridPane.rowIndex="1" />
@@ -79,7 +108,14 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="btnOpenProject" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openProject" text="TODO: Open" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                                          <Button fx:id="btnOpenProject" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openProject" text="TODO: Open" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                             <graphic>
+                                                <ImageView pickOnBounds="true" smooth="false">
+                                                   <image>
+                                                      <Image url="@../img/16open_folder.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic></Button>
                                           <ListView fx:id="listViewProjects" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="3" />
                                        </children>
                                     </GridPane>
@@ -93,11 +129,25 @@
                               </HBox>
                               <HBox fx:id="controlPane" spacing="15.0">
                                  <children>
-                                    <Button fx:id="btnEditJson" mnemonicParsing="false" onAction="#btnEditJson" text="TODO: EDIT JSON" />
+                                    <Button fx:id="btnEditJson" mnemonicParsing="false" onAction="#btnEditJson" text="TODO: EDIT JSON">
+                                       <graphic>
+                                          <ImageView pickOnBounds="true" smooth="false">
+                                             <image>
+                                                <Image url="@../img/16page_edit.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <Button fx:id="btnCalculate" mnemonicParsing="false" onAction="#calculate" text="CALCULATE">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
+                                       <graphic>
+                                          <ImageView pickOnBounds="true" smooth="false">
+                                             <image>
+                                                <Image url="@../img/16calculator.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
                                     </Button>
                                  </children>
                                  <padding>
@@ -130,8 +180,22 @@
                                        <children>
                                           <HBox spacing="5.0">
                                              <children>
-                                                <Button fx:id="btnCreateRectangle" mnemonicParsing="false" onAction="#createRectangle" text="Cuboid" />
-                                                <Button fx:id="btnCreateCircle" mnemonicParsing="false" onAction="#createCircle" text="Cylinder" />
+                                                <Button fx:id="btnCreateRectangle" mnemonicParsing="false" onAction="#createRectangle" text="Cuboid">
+                                                   <graphic>
+                                                      <ImageView pickOnBounds="true" smooth="false">
+                                                         <image>
+                                                            <Image url="@../img/32rectangle.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
+                                                <Button fx:id="btnCreateCircle" mnemonicParsing="false" onAction="#createCircle" text="Cylinder">
+                                                   <graphic>
+                                                      <ImageView pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../img/32ellipse.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
                                              </children>
                                           </HBox>
                                           <ListView fx:id="listView" prefHeight="180.0" prefWidth="228.0" />
@@ -145,8 +209,22 @@
                                        <children>
                                           <HBox spacing="5.0">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#createLightPoint" text="Single light point" />
-                                                <Button mnemonicParsing="false" onAction="#createLightPointsNet" text="Light points net" />
+                                                <Button mnemonicParsing="false" onAction="#createLightPoint" text="Single point">
+                                                   <graphic>
+                                                      <ImageView pickOnBounds="true" smooth="false">
+                                                         <image>
+                                                            <Image url="@../img/16point_small.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
+                                                <Button mnemonicParsing="false" onAction="#createLightPointsNet" text="Points net">
+                                                   <graphic>
+                                                      <ImageView pickOnBounds="true" smooth="false">
+                                                         <image>
+                                                            <Image url="@../img/16points_small.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
                                              </children>
                                           </HBox>
                                           <ListView fx:id="listViewLightPoints" prefHeight="200.0" prefWidth="200.0" />
@@ -158,7 +236,14 @@
                                 <content>
                                     <VBox fx:id="lightSourcesPane" spacing="5.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#createLightSource" text="Add light source" />
+                                          <Button mnemonicParsing="false" onAction="#createLightSource" text="Add light source">
+                                             <graphic>
+                                                <ImageView pickOnBounds="true" smooth="false">
+                                                   <image>
+                                                      <Image url="@../img/16lightbulb_add.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic></Button>
                                           <TableView fx:id="tableViewLightSources" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                     </VBox>
@@ -175,6 +260,13 @@
                      </left>
                   </BorderPane>
                </content>
+               <graphic>
+                  <ImageView pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@../img/16class_module.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Tab>
             <Tab fx:id="tabOutput" closable="false" text="Output">
                <content>
@@ -193,6 +285,13 @@
                      </children>
                   </VBox>
                </content>
+               <graphic>
+                  <ImageView pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@../img/16assembled_diagram.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Tab>
          </tabs>
       </TabPane>

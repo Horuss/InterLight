@@ -7,6 +7,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import pl.edu.agh.kis.interlight.fx.GuiHelper;
 import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 
@@ -71,6 +73,8 @@ public class LightPointPropertiesPanel extends AbstractPropertiesPanel {
 
 		btnDelete = new Button("Delete");
 		btnDelete.setPrefWidth(Double.MAX_VALUE);
+		btnDelete.setGraphic(new ImageView(new Image(getClass()
+				.getClassLoader().getResourceAsStream("img/16delete.png"))));
 		btnDelete.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

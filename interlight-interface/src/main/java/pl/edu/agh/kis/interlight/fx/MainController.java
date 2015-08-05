@@ -22,8 +22,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -114,13 +112,6 @@ public class MainController {
 		for (TitledPane pane : accordion.getPanes()) {
 			pane.setExpanded(false);
 		}
-
-		btnCreateRectangle.setText(null);
-		btnCreateRectangle.setGraphic(new ImageView(new Image(getClass()
-				.getClassLoader().getResourceAsStream("img/32rectangle.png"))));
-		btnCreateCircle.setText(null);
-		btnCreateCircle.setGraphic(new ImageView(new Image(getClass()
-				.getClassLoader().getResourceAsStream("img/32ellipse.png"))));
 
 		// Room
 		accordion.getPanes().get(0).expandedProperty()

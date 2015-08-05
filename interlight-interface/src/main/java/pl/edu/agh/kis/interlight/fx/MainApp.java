@@ -23,6 +23,7 @@ public class MainApp extends Application {
 	public void start(Stage stage) throws Exception {
 		Locale.setDefault(Locale.US);
 		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/fxml/main.fxml"));
 		Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(
 				"/fxml/main.fxml"));
 
