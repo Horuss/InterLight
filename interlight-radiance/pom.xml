@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>pl.edu.agh.kis</groupId>
+		<artifactId>interlight</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>interlight-radiance</artifactId>
+	<name>InterLight Radiance</name>
+	<description>InterLight Radiance module</description>
+	<developers>
+		<developer>
+			<name>Jakub Czajkowski</name>
+			<url>http://www.horuss.pl/</url>
+			<organization>AGH-UST</organization>
+			<organizationUrl>http://www.agh.edu.pl/</organizationUrl>
+		</developer>
+	</developers>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>lib</directory>
+			</resource>
+		</resources>
+	</build>
+
+	<dependencies>
+
+		<!-- InterLight dependencies -->
+
+		<!-- Project specific dependencies -->
+
+	</dependencies>
+</project>

@@ -50,6 +50,31 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>pl.edu.agh.kis</groupId>
+									<artifactId>interlight-radiance</artifactId>
+									<version>1.0.0</version>
+									<type>jar</type>
+									<includes>radiance/</includes>
+									<outputDirectory>${basedir}/target/jfx/app/lib</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
@@ -59,10 +84,10 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/target/jfx/app/lib/radiance</outputDirectory>
+							<outputDirectory>${basedir}/target/jfx/app/res/ies</outputDirectory>
 							<resources>
 								<resource>
-									<directory>lib/radiance</directory>
+									<directory>res/ies</directory>
 								</resource>
 							</resources>
 						</configuration>
@@ -74,10 +99,10 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/target/jfx/app/res/ies</outputDirectory>
+							<outputDirectory>${basedir}/target/jfx/app/projects</outputDirectory>
 							<resources>
 								<resource>
-									<directory>res/ies</directory>
+									<directory>projects</directory>
 								</resource>
 							</resources>
 						</configuration>
@@ -108,6 +133,11 @@
 		<dependency>
 			<groupId>pl.edu.agh.kis</groupId>
 			<artifactId>interlight-common-datamodel</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>pl.edu.agh.kis</groupId>
+			<artifactId>interlight-radiance</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>

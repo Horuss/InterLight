@@ -14,6 +14,7 @@ public class CommandProviderTest {
 	@BeforeClass
 	public static void setUpClass() {
 		CommandProviderTest.osName = System.getProperty("os.name");
+		CommandProvider.isTest = true;
 	}
 	
 	@Before
