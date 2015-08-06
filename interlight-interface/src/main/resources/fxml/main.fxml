@@ -21,6 +21,15 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#menuSave" text="Save">
+                     <graphic>
+                        <ImageView pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@../img/16page_save.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
               <MenuItem mnemonicParsing="false" onAction="#menuClose" text="Close">
                      <graphic>
                         <ImageView pickOnBounds="true" smooth="false">

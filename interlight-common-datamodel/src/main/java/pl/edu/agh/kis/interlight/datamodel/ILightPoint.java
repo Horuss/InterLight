@@ -8,12 +8,22 @@ import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
  */
 public class ILightPoint {
 
+	private Integer id;
 	private IPoint point;
 	private Double height;
 
-	public ILightPoint(IPoint point, Double height) {
+	public ILightPoint(Integer id, IPoint point, Double height) {
+		this.id = id;
 		this.point = point;
 		this.height = height;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public IPoint getPoint() {
@@ -34,7 +44,8 @@ public class ILightPoint {
 
 	@Override
 	public String toString() {
-		return "Light Point [" + point + ", height: " + height + "]";
+		return "ILightPoint [id=" + id + ", point=" + point + ", height="
+				+ height + "]";
 	}
 
 	@Override
@@ -42,6 +53,7 @@ public class ILightPoint {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((height == null) ? 0 : height.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((point == null) ? 0 : point.hashCode());
 		return result;
 	}
@@ -59,6 +71,11 @@ public class ILightPoint {
 			if (other.height != null)
 				return false;
 		} else if (!height.equals(other.height))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (point == null) {
 			if (other.point != null)

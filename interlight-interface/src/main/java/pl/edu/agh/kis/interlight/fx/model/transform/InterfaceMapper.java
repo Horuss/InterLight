@@ -74,7 +74,7 @@ public class InterfaceMapper {
 	}
 
 	public static ILightPoint map(LightPoint lightPoint) {
-		return new ILightPoint(new IPoint(GuiHelper.SCALE_PX_TO_M
+		return new ILightPoint(lightPoint.getId(), new IPoint(GuiHelper.SCALE_PX_TO_M
 				* lightPoint.getCircle().getLayoutX(), GuiHelper.SCALE_PX_TO_M
 				* lightPoint.getCircle().getLayoutY()), lightPoint.getHeight());
 	}

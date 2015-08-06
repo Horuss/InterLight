@@ -73,7 +73,7 @@ public class InterfaceMapperTest {
 	public void mapLightPointTest() {
 
 		// given
-		ILightPoint iLightPoint = new ILightPoint(new IPoint(X, Y), H);
+		ILightPoint iLightPoint = new ILightPoint(1, new IPoint(X, Y), H);
 
 		// when
 		LightPoint lightPoint = InterfaceMapper.unmap(iLightPoint);

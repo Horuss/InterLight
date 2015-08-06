@@ -497,6 +497,11 @@ public class MainController {
 	void menuNewOpen(ActionEvent event) {
 		initialize();
 	}
+	
+	@FXML
+	void menuSave(ActionEvent event) {
+		// TODO
+	}
 
 	@FXML
 	void calculate(ActionEvent event) {
