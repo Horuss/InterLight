@@ -25,6 +25,11 @@
 			<artifactId>interlight-common-datamodel</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>pl.edu.agh.kis</groupId>
+			<artifactId>interlight-radiance</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	
 		<!-- Project specific dependencies -->
 		
