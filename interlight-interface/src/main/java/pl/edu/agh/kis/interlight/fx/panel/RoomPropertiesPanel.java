@@ -45,10 +45,11 @@ public class RoomPropertiesPanel extends AbstractPropertiesPanel {
 		btnReset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				guiHelper.getSceneModel().createBounds(guiHelper.getCanvas());
+				guiHelper.getSceneModel().clearBounds(guiHelper.getCanvas());
 				guiHelper.getAnchorsList().clear();
+				guiHelper.getCanvas().getChildren().add(guiHelper.getSceneModel().getRoomBounds());
+				guiHelper.getSceneModel().getRoomBounds().toBack();
 				btnFit.setDisable(false);
-				guiHelper.setHintMessage(GuiHelper.HINT_ROOM_INIT);
 			}
 		});
 		btnReset.setGraphic(new ImageView(new Image(getClass()

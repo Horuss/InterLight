@@ -52,9 +52,12 @@ import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import pl.edu.agh.kis.interlight.datamodel.ICuboid;
+import pl.edu.agh.kis.interlight.datamodel.ICylinder;
 import pl.edu.agh.kis.interlight.datamodel.ILightPoint;
 import pl.edu.agh.kis.interlight.datamodel.ILightSource;
 import pl.edu.agh.kis.interlight.datamodel.ISolution;
+import pl.edu.agh.kis.interlight.datamodel.sets.ISceneSet;
 import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
 import pl.edu.agh.kis.interlight.fx.model.Cuboid;
 import pl.edu.agh.kis.interlight.fx.model.Cylinder;
@@ -64,6 +67,7 @@ import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.SceneModel;
 import pl.edu.agh.kis.interlight.fx.model.SceneShape;
 import pl.edu.agh.kis.interlight.fx.model.SolutionDetailsRow;
+import pl.edu.agh.kis.interlight.fx.model.transform.InterfaceMapper;
 import pl.edu.agh.kis.interlight.fx.panel.RoomPropertiesPanel;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
 import pl.edu.agh.kis.interlight.fx.parts.LightPointNetDialog;
@@ -109,6 +113,7 @@ public class GuiHelper {
 	public GuiHelper() {
 		radianceExecutor = new RadianceExecutor();
 		sceneModel = new SceneModel();
+		sceneModel.getRoom().setSceneObject(new Polygon());
 		loadIesList();
 		anchorsList = new LinkedList<>();
 	}
@@ -311,8 +316,6 @@ public class GuiHelper {
 		hintText.setFill(Color.GRAY);
 		hintText.setFont(Font.font(20));
 		canvas.getChildren().add(hintText);
-		setHintMessage(HINT_ROOM_INIT);
-		sceneModel.createBounds(canvas);
 		return canvas;
 	}
 	
@@ -571,6 +574,50 @@ public class GuiHelper {
 		buttons.getChildren().add(btnNorm);
 		content.getChildren().add(buttons);
 		detailsPane.setContent(content);
+	}
+	
+	public ISceneSet guiToModel() {
+		
+		ISceneSet sceneSet = new ISceneSet();
+		
+		sceneSet.setScene(InterfaceMapper.map(sceneModel));
+		
+		sceneSet.setRoom(InterfaceMapper.map(sceneModel.getRoom()));
+		
+		for(LightPoint lightPoint : sceneModel.getLightPoints()) {
+			sceneSet.getLightPoints().add(InterfaceMapper.map(lightPoint));
+		}
+		
+		for (SceneShape shape : sceneModel.getShapes()) {
+			if (shape instanceof Cuboid) {
+				sceneSet.getCuboids().add(InterfaceMapper.map((Cuboid) shape));
+			} else if (shape instanceof Cylinder) {
+				sceneSet.getCylinders().add(InterfaceMapper.map((Cylinder) shape));
+			}
+		}
+		
+		return sceneSet;
+	}
+	
+	public void modelToGui(ISceneSet sceneSet) {
+		sceneModel = InterfaceMapper.unmap(sceneSet.getScene());
+		GuiHelper.SCALE_PX_TO_M = sceneModel.getSceneWidthM()
+				/ GuiHelper.CANVAS_WIDTH;
+		GuiHelper.SCALE_M_TO_PX = GuiHelper.CANVAS_WIDTH
+				/ sceneModel.getSceneWidthM();
+		sceneModel.setRoom(InterfaceMapper.unmap(sceneSet.getRoom()));
+		loadIesList();
+		for (ILightPoint lightPoint : sceneSet.getLightPoints()) {
+			LightPoint lp = InterfaceMapper.unmap(lightPoint);
+			sceneModel.getLightPoints().add(lp);
+		}
+		for (ICuboid cuboid : sceneSet.getCuboids()) {
+			sceneModel.getShapes().add(InterfaceMapper.unmap(cuboid));
+		}
+		for (ICylinder cylinder : sceneSet.getCylinders()) {
+			sceneModel.getShapes().add(InterfaceMapper.unmap(cylinder));
+		}
+		
 	}
 
 	public double getOrgSceneX() {

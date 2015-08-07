@@ -117,7 +117,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="btnOpenProject" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openProject" text="TODO: Open" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                          <Button fx:id="btnOpenProject" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openProject" text="Open" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                              <graphic>
                                                 <ImageView pickOnBounds="true" smooth="false">
                                                    <image>

@@ -27,11 +27,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import pl.edu.agh.kis.interlight.datamodel.ICuboid;
+import pl.edu.agh.kis.interlight.datamodel.ILightPoint;
+import pl.edu.agh.kis.interlight.datamodel.IRoom;
+import pl.edu.agh.kis.interlight.datamodel.IScene;
 import pl.edu.agh.kis.interlight.datamodel.ISolution;
+import pl.edu.agh.kis.interlight.datamodel.sets.ISceneSet;
+import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
 import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.SceneShape;
+import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
 
 public class MainController {
 
@@ -93,11 +100,11 @@ public class MainController {
 	private TitledPane solutionDetailsPane;
 
 	private GuiHelper guiHelper;
-
-	@FXML
-	private void initialize() {
-
+	
+	private void reset() {
+		
 		guiHelper = new GuiHelper();
+		
 		canvasWrapper.getChildren().clear();
 
 		accordion.setDisable(true);
@@ -112,6 +119,12 @@ public class MainController {
 		for (TitledPane pane : accordion.getPanes()) {
 			pane.setExpanded(false);
 		}
+	}
+
+	@FXML
+	private void initialize() {
+		
+		reset();
 
 		// Room
 		accordion.getPanes().get(0).expandedProperty()
@@ -199,7 +212,7 @@ public class MainController {
 					}
 				});
 
-		listView.setItems(guiHelper.getSceneModel().getShapes());
+		
 		listView.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<AbstractSceneObject>() {
 					@Override
@@ -225,8 +238,7 @@ public class MainController {
 						}
 					}
 				});
-		listViewLightPoints
-				.setItems(guiHelper.getSceneModel().getLightPoints());
+		
 		listViewLightPoints.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<AbstractSceneObject>() {
 					@Override
@@ -405,52 +417,27 @@ public class MainController {
 
 	@FXML
 	private void newScene(ActionEvent event) {
-
-		controlPane.setVisible(true);
-
-		accordion.setDisable(false);
-		accordion.getPanes().get(0).setExpanded(true);
-
+		
+		guiHelper.getSceneModel().setName(projectName.getText());
 		guiHelper.getSceneModel().setSceneWidthM(
 				Double.parseDouble(sceneWidth.getText()));
 		guiHelper.getSceneModel().setSceneLengthM(
 				Double.parseDouble(sceneLength.getText()));
 		guiHelper.getSceneModel().setRoomHeightM(GuiHelper.DEFAULT_HEIGHT);
-		GuiHelper.SCALE_PX_TO_M = guiHelper.getSceneModel().getSceneWidthM()
-				/ GuiHelper.CANVAS_WIDTH;
-		GuiHelper.SCALE_M_TO_PX = GuiHelper.CANVAS_WIDTH
-				/ guiHelper.getSceneModel().getSceneWidthM();
 
-		newSceneBox.setVisible(false);
-		canvasWrapper.setVisible(true);
-
-		canvasWrapper.getChildren().add(guiHelper.createCanvas());
-
-		guiHelper.drawRulers(canvasWrapper);
-
-		tabInput.setText(projectName.getText());
-
-		guiHelper.getSceneModel().getRoom().createPropertiesPanel(guiHelper);
-		roomPane.getChildren().clear();
-		roomPane.getChildren().add(
-				guiHelper.getSceneModel().getRoom().getPropertiesPanel());
-		guiHelper.createDrawSceneHandler();
-
+		load();
+		
+		guiHelper.setHintMessage(GuiHelper.HINT_ROOM_INIT);
 	}
 
 	@FXML
-	private void createRectangle(ActionEvent event) {
+	void createRectangle(ActionEvent event) {
 		guiHelper.createRectangle(listView);
 	}
 
 	@FXML
 	void createCircle(ActionEvent event) {
 		guiHelper.createEllipse(listView);
-	}
-
-	@FXML
-	void resetRoom(ActionEvent event) {
-		guiHelper.getSceneModel().createBounds(guiHelper.getCanvas());
 	}
 
 	@FXML
@@ -470,13 +457,25 @@ public class MainController {
 
 	@FXML
 	void openProject(ActionEvent event) {
+		
+		String projectName = listViewProjects.getSelectionModel().getSelectedItem();
 		// TODO
 		// 1. use interlight-model method to deserialize json into common-datamodel
+		// TODO only stub now
+		ISceneSet sceneSet = new ISceneSet();
+		sceneSet.setScene(new IScene(projectName, 8.0, 6.0));
+		IRoom room = new IRoom(10.0);
+		room.getPoints().add(new IPoint(1.0, 1.0));
+		room.getPoints().add(new IPoint(5.0, 1.0));
+		room.getPoints().add(new IPoint(4.0, 4.0));
+		sceneSet.setRoom(room);
+		sceneSet.getLightPoints().add(new ILightPoint(1, new IPoint(5.0, 5.0), 9.0));
+		sceneSet.getCuboids().add(new ICuboid(new IPoint(2.0, 2.0), 4.0, 1.0, 1.0, 0, true));
 		// 2. convert common-datamodel to interface datamodel
+		guiHelper.modelToGui(sceneSet);
 		// 3. create scene from converted objects
 		
-		// Stub:
-		// TODO
+		load();
 	}
 
 	@FXML
@@ -495,18 +494,23 @@ public class MainController {
 
 	@FXML
 	void menuNewOpen(ActionEvent event) {
-		initialize();
+		reset();
 	}
 	
 	@FXML
 	void menuSave(ActionEvent event) {
 		// TODO
+		// 1. convert gui model to common-datamodel 
+		guiHelper.guiToModel();
+		// 2. use interlight-model method to create json scene from common-datamodel
+		// 3. save it to file in project folder
 	}
 
 	@FXML
 	void calculate(ActionEvent event) {
 		// TODO
 		// 1. convert gui model to common-datamodel 
+		guiHelper.guiToModel();
 		// 2. use interlight-model method to create json scene from common-datamodel
 		// 3. use interlight-model method to create radiance input from json
 		// 4. convert radiance output to common-datamodel
@@ -525,8 +529,67 @@ public class MainController {
 	void btnEditJson(ActionEvent event) {
 		// TODO
 		// 1. convert gui model to common-datamodel 
+		guiHelper.guiToModel();
 		// 2. use interlight-model method to create json scene from common-datamodel
 		// 3. display new window: json editor with validation functionality
+	}
+	
+	private void load() {
+		
+		tabInput.setText(guiHelper.getSceneModel().getName());
+		controlPane.setVisible(true);
+
+		accordion.setDisable(false);
+		accordion.getPanes().get(0).setExpanded(true);
+		
+		GuiHelper.SCALE_PX_TO_M = guiHelper.getSceneModel().getSceneWidthM()
+				/ GuiHelper.CANVAS_WIDTH;
+		GuiHelper.SCALE_M_TO_PX = GuiHelper.CANVAS_WIDTH
+				/ guiHelper.getSceneModel().getSceneWidthM();
+
+		newSceneBox.setVisible(false);
+		canvasWrapper.setVisible(true);
+
+		canvasWrapper.getChildren().add(guiHelper.createCanvas());
+		
+		guiHelper.getSceneModel().getRoomBounds().setId("borders");
+		guiHelper.getCanvas().getChildren().add(guiHelper.getSceneModel().getRoomBounds());
+		guiHelper.getSceneModel().getRoom().getSceneObject().toBack();
+
+		guiHelper.drawRulers(canvasWrapper);
+
+		guiHelper.getSceneModel().getRoom().createPropertiesPanel(guiHelper);
+		roomPane.getChildren().clear();
+		roomPane.getChildren().add(
+				guiHelper.getSceneModel().getRoom().getPropertiesPanel());
+		guiHelper.createDrawSceneHandler();
+		
+		for (LightPoint lightPoint : guiHelper.getSceneModel().getLightPoints()) { 
+			lightPoint.createPropertiesPanel(guiHelper);
+			lightPoint.createEventHandlers(guiHelper, listViewLightPoints);
+			guiHelper.getCanvas().getChildren().add(lightPoint.getSceneObject());
+		}
+		for (SceneShape sceneShape : guiHelper.getSceneModel().getShapes()) { 
+			sceneShape.createPropertiesPanel(guiHelper);
+			sceneShape.createEventHandlers(guiHelper, listView);
+			sceneShape.getSceneObject().getStyleClass().add("sceneObj");
+			guiHelper.getCanvas().getChildren().add(sceneShape.getSceneObject());
+		}
+		Double tmp = null;
+		for (Double d : guiHelper.getSceneModel().getRoomBounds().getPoints()) {
+			if (tmp == null) {
+				tmp = d;
+			} else {
+				BoundsAnchor newAnchor = new BoundsAnchor(guiHelper, tmp, d);
+				guiHelper.getAnchorsList().add(newAnchor);
+				guiHelper.getCanvas().getChildren().add(newAnchor);
+				tmp = null;
+			}
+		}
+		
+		listView.setItems(guiHelper.getSceneModel().getShapes());
+		listViewLightPoints
+				.setItems(guiHelper.getSceneModel().getLightPoints());
 	}
 
 }

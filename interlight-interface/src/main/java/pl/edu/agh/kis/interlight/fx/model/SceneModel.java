@@ -29,16 +29,15 @@ public class SceneModel {
 		room = new Room();
 	}
 	
-	public void createBounds(Pane canvas) {
+	public void clearBounds(Pane canvas) {
 		canvas.getChildren().removeIf(p -> p instanceof BoundsAnchor);
 		canvas.getChildren().removeIf(p -> p instanceof Label);
 		if(getRoom().getSceneObject() != null) {
 			canvas.getChildren().remove(getRoom().getSceneObject());
+			Polygon polygon = new Polygon();
+			polygon.setId("borders");
+			getRoom().setSceneObject(polygon);
 		}
-		getRoom().setSceneObject(new Polygon());
-		getRoom().getSceneObject().setId("borders");
-		canvas.getChildren().add(getRoom().getSceneObject());
-		getRoom().getSceneObject().toBack();
 	}
 
 	public ObservableList<SceneShape> getShapes() {
@@ -91,5 +90,9 @@ public class SceneModel {
 
 	public Room getRoom() {
 		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 }

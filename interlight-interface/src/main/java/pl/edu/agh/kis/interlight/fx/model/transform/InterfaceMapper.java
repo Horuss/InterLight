@@ -103,7 +103,8 @@ public class InterfaceMapper {
 			if (x == null) {
 				x = new Double(d);
 			} else {
-				points.add(new IPoint(x, new Double(d)));
+				points.add(new IPoint(GuiHelper.SCALE_PX_TO_M * x,
+						GuiHelper.SCALE_PX_TO_M * new Double(d)));
 				x = null;
 			}
 		}
@@ -116,7 +117,8 @@ public class InterfaceMapper {
 		room.setHeight(iRoom.getHeight());
 		Polygon polygon = new Polygon();
 		for (IPoint point : iRoom.getPoints()) {
-			polygon.getPoints().addAll(point.getX(), point.getY());
+			polygon.getPoints().addAll(GuiHelper.SCALE_M_TO_PX * point.getX(),
+					GuiHelper.SCALE_M_TO_PX * point.getY());
 		}
 		room.setSceneObject(polygon);
 		return room;

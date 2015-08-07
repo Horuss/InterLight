@@ -91,6 +91,7 @@ public abstract class AbstractPropertiesPanel extends GridPane {
 		Label lbl = new Label("Is workspace?");
 		add(lbl, 0, gridIndex);
 		chkWorkspace = new CheckBox();
+		chkWorkspace.selectedProperty().setValue(object.getWorkspace());
 		chkWorkspace.selectedProperty().addListener(
 				new ChangeListener<Boolean>() {
 					public void changed(ObservableValue<? extends Boolean> ov,
