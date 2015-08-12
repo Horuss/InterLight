@@ -532,6 +532,7 @@ public class MainController {
 		guiHelper.guiToModel();
 		// 2. use interlight-model method to create json scene from common-datamodel
 		// 3. display new window: json editor with validation functionality
+		//	textarea z jsonem, example w formie helpa z boku, buttony: validacje i zatwierdzenie
 	}
 	
 	private void load() {

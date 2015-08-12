@@ -16,7 +16,7 @@ public class ICuboid {
 	private Double width;
 	private Double length;
 	/**
-	 * Clockwise rotation from the top-left base point (0-89)
+	 * Clockwise rotation from the center base point (0-89)
 	 */
 	private Integer rotation;
 	private Boolean workspace;
