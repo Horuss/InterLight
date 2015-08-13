@@ -1,0 +1,122 @@
+1. Aby zapisaæ scenê i  utworzyæ plik  NazwaSceny_scene.json  trzeba wywo³aæ
+
+		
+		
+		DataToJSON data = new DataToJSON(cuboids, cylinders, lightPoints, lightSources, iRoom, iScene);
+		data.transformAndGenerate();
+		
+		
+		
+gdzie  (cuboids, cylinders, lightPoints, lightSources, iRoom, iScene)  to:
+
+	List<ICuboid> cuboids = new LinkedList<>();
+	List<ICylinder> cylinders = new LinkedList<>();
+	List<ILightPoint> lightPoints = new LinkedList<>();
+	List<ILightSource> lightSources = new LinkedList<>();
+	IRoom iRoom;
+	IScene iScene;
+	
+	
+	przyk³ad w DataToJSONtest.java gdzie istotne s¹ tylko dwie ostatnie linie takie jak te powy¿ej reszta to tworzenie przyk³adowych danych
+	
+	
+	
+	
+	
+	
+	
+	
+	
+2. Aby wczytaæ scenê:
+
+
+
+	ISceneSet scene = JSONToData.main("C:/Users/Bartek/workInterlight1/InterLight/Scenaaaa_scene.json");
+
+
+	
+w "scene" s¹ wszystkie obiekty, œcie¿ka tak jak na przyk³adzie
+
+
+przyk³ad w JSONToDatatest.java 
+
+
+
+
+
+
+
+
+
+3. Zak³adka z walidacj¹  (przy zapisie proponujê robiæ walidacjê i je¿eli jest ok to zapis a je¿eli nie to komunikat ¿e s¹ b³êdy)
+
+
+
+	3.1 W pliku patternJSON.json znajduje siê JSON do helpa (ten taki wzorcowy do sugerowania) wiêc tylko ctrl+c i ctrl+v do tego wyœwietlenia
+
+	3.2 Wczytywanie JSONA z pliku i stworzenie ³adnego w stringu, do wprowadzenia do okna do edycji
+
+
+		String JSON = JSONReadToString.readPrettyJson("1Scena_scene.json");
+
+		przyk³ad w JSONReadToStringtest.java
+
+
+	3.3 Walidacja Jsona 
+
+
+
+	przyk³adowe wywo³anie
+
+		String jsonToValidate = "{\"Cuboids:\":[{\"Length\":15.0,\"Point Base Top Left X\":11.0,\"Height\":13.0,\"Point Base Top Left Y\":12.0,\"Width\":14.0,\"Rotation\":18,\"Workspace\":true},{\"Length\":15.0,\"Point Base Top Left X\":11.0,\"Height\":13.0,\"Point Base Top Left Y\":12.0,\"Width\":14.0,\"Rotation\":18,\"Workspace\":true}],\"Light Points:\":[{\"X\":11.0,\"Y\":12.0,\"Height\":13.0,\"ID\":18},{\"X\":11.0,\"Y\":12.0,\"Height\":13.0,\"ID\":18}],\"Light Sources:\":[{\"IES\":\"1Scena\",\"Power\":11.0},{\"IES\":\"1Scena\",\"Power\":11.0},{\"IES\":\"1Scena\",\"Power\":11.0},{\"IES\":\"1Scena\",\"Power\":11.0}],\"Room points:\":[{\"X\":14.0,\"Y\":15.0},{\"X\":14.0,\"Y\":15.0}],\"Room height:\":13.0,\"Scene length:\":15.0,\"Name:\":\"1Scena\",\"Scene width:\":14.0,\"Cylinders:\":[{\"Radius Y\":17.0,\"Radius X\":16.0,\"Point Base Center X\":11.0,\"Point Base Center Y\":12.0,\"Height\":13.0,\"Rotation\":18,\"Workspace\":true},{\"Radius Y\":17.0,\"Radius X\":16.0,\"Point Base Center X\":11.0,\"Point Base Center 			Y\":12.0,\"Height\":13.0,\"Rotation\":18,\"Workspace\":true},{\"Radius Y\":17.0,\"Radius X\":16.0,\"Point Base Center X\":11.0,\"Point Base Center Y\":12.0,\"Height\":13.0,\"Rotation\":18,\"Workspace\":true}]}";
+	
+		boolean test = JSONSchema.validate(jsonToValidate);
+
+
+
+
+		jsonToValidate - string do sprawdzenia
+	
+		JSONSchema.validate(jsonToValidate) zwraca true gdy JSON poprawny lub false gdy niepoprawny
+	
+	
+		przyk³ad w JSONSchematest.java
+
+
+
+
+	3.4 Zapis    przyk³adowo zrobione w pliku SaveJSON.java
+
+		tak jak pisa³em wy¿ej przy zapisie proponujê zrobiæ walidacjê i je¿eli jest ok to zapis a je¿eli nie to komunikat ¿e s¹ b³êdy
+		zapis do pliku ju¿ najprostszy z mo¿liwych mo¿e lecieæ w tym przypadku jako string( nie budujemy jako tako JSONA tylko go walidujemy i zapisujemy)
+		nazwê pliku d¹³em przyk³adow¹ to trzeba zapisaæ pewnie tam sk¹d by³o wczytane a Ty te¿ chcia³eœ to w specjalne miejsce zapisaæ
+		
+
+		try {
+			String JSON = JSONReadToString.readPrettyJson("1Scena_scene.json");
+				
+			boolean test = JSONSchema.validate(JSON);
+		
+			if(test){
+				FileWriter file = new FileWriter("ASDFG_scene.json");
+		   		 file.write(JSON);
+		   	 	file.flush();
+		   	 	file.close();
+			}
+			else System.out.println("B³¹d sk³adni");
+		
+   	 
+   	 
+   	 	} catch (IOException e) {
+   		 e.printStackTrace();
+   	 	}
+		}
+	
+
+
+
+
+
+	
+
+ 

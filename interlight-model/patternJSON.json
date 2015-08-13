@@ -1,0 +1,52 @@
+{
+  "Name:": "Scene name",
+  "Scene width:": 1.0,
+  "Scene length:": 2.0,
+  "Room height:": 3.0,
+  "Room points:": [
+    {
+      "X": 1.0,
+      "Y": 1.0
+    },
+    {
+      "X": 2.0,
+      "Y": 2.0
+    }
+  ],
+  "Cuboids:": [
+    {
+      "Point Base Top Left X": 1.0,
+	  "Point Base Top Left Y": 2.0,
+      "Height": 3.0,
+      "Width": 4.0,
+      "Length": 5.0,
+      "Rotation": 6,
+      "Workspace": true
+    }
+  ],
+  "Cylinders:": [
+    {
+      "Point Base Center X": 1.0,
+      "Point Base Center Y": 2.0,
+      "Radius Y": 3.0,
+      "Radius X": 4.0,
+      "Height": 5.0,
+      "Rotation": 6,
+      "Workspace": true
+    }
+  ],
+  "Light Points:": [
+    {
+      "ID": 1,
+	  "X": 1.0,
+      "Y": 2.0,
+      "Height": 3.0
+    }
+  ],
+  "Light Sources:": [
+    {
+      "IES": "Ies",
+      "Power": 1.0
+    }
+  ]
+}
