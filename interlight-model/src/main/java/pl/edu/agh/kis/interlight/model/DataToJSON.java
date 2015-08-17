@@ -108,9 +108,9 @@ public class DataToJSON {
         }
         
         
-        JPoint jpoint = new JPoint();
+        
         for(IPoint point : room.getPoints())  {
-        	
+        	JPoint jpoint = new JPoint();
         	jpoint.setPoint_X(point.getX());
         	jpoint.setPoint_Y(point.getY());
         	            

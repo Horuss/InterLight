@@ -30,12 +30,12 @@ public class JSONReader {
 
 
 	
-	private static JScene scene;
-	private static List<JCuboid> cuboids = new LinkedList<>();;
-	private static List<JCylinder> cylinders = new LinkedList<>();;
-	private static List<JLightPoint> lightPoints = new LinkedList<>();;
-	private static List<JLightSource> lightSources = new LinkedList<>();;
-	private static List<JPoint> points = new LinkedList<>();
+	private JScene scene;
+	private List<JCuboid> cuboids = new LinkedList<>();;
+	private List<JCylinder> cylinders = new LinkedList<>();;
+	private List<JLightPoint> lightPoints = new LinkedList<>();;
+	private List<JLightSource> lightSources = new LinkedList<>();;
+	private List<JPoint> points = new LinkedList<>();
 	
 	String address;
 

@@ -51,8 +51,8 @@ public class InterfaceMapper {
 
 	public static ICylinder map(Cylinder cylinder) {
 		return new ICylinder(new IPoint(GuiHelper.SCALE_PX_TO_M
-				* cylinder.getEllipse().getCenterX(), GuiHelper.SCALE_PX_TO_M
-				* cylinder.getEllipse().getCenterY()), GuiHelper.SCALE_PX_TO_M
+				* cylinder.getEllipse().getLayoutX(), GuiHelper.SCALE_PX_TO_M
+				* cylinder.getEllipse().getLayoutY()), GuiHelper.SCALE_PX_TO_M
 				* cylinder.getEllipse().getRadiusX(), GuiHelper.SCALE_PX_TO_M
 				* cylinder.getEllipse().getRadiusY(), cylinder.getHeight(),
 				(int) cylinder.getEllipse().getRotate(),
@@ -63,11 +63,13 @@ public class InterfaceMapper {
 		Cylinder cylinder = new Cylinder();
 		cylinder.setHeight(iCylinder.getHeight());
 		cylinder.setWorkspace(iCylinder.getWorkspace());
-		Ellipse ellipse = new Ellipse(
-				GuiHelper.SCALE_M_TO_PX * iCylinder.getPointBaseCenter().getX(),
-				GuiHelper.SCALE_M_TO_PX * iCylinder.getPointBaseCenter().getY(),
-				GuiHelper.SCALE_M_TO_PX * iCylinder.getRadiusX(),
-				GuiHelper.SCALE_M_TO_PX * iCylinder.getRadiusY());
+		Ellipse ellipse = new Ellipse(GuiHelper.SCALE_M_TO_PX
+				* iCylinder.getRadiusX(), GuiHelper.SCALE_M_TO_PX
+				* iCylinder.getRadiusY());
+		ellipse.setLayoutX(GuiHelper.SCALE_M_TO_PX
+				* iCylinder.getPointBaseCenter().getX());
+		ellipse.setLayoutY(GuiHelper.SCALE_M_TO_PX
+				* iCylinder.getPointBaseCenter().getY());
 		ellipse.setRotate(iCylinder.getRotation());
 		cylinder.setEllipse(ellipse);
 		return cylinder;

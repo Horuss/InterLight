@@ -28,18 +28,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import pl.edu.agh.kis.interlight.datamodel.ICuboid;
-import pl.edu.agh.kis.interlight.datamodel.ILightPoint;
-import pl.edu.agh.kis.interlight.datamodel.IRoom;
-import pl.edu.agh.kis.interlight.datamodel.IScene;
 import pl.edu.agh.kis.interlight.datamodel.ISolution;
 import pl.edu.agh.kis.interlight.datamodel.sets.ISceneSet;
-import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
 import pl.edu.agh.kis.interlight.fx.model.AbstractSceneObject;
 import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.SceneShape;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
+import pl.edu.agh.kis.interlight.model.DataToJSON;
+import pl.edu.agh.kis.interlight.model.JSONToData;
 
 public class MainController {
 
@@ -101,7 +98,8 @@ public class MainController {
 	private void reset() {
 		
 		guiHelper = new GuiHelper();
-		
+		listViewProjects.setItems(guiHelper.createProjectsList());
+		projectName.setText(guiHelper.createNewProjectName());
 		canvasWrapper.getChildren().clear();
 
 		accordion.setDisable(true);
@@ -456,22 +454,11 @@ public class MainController {
 	void openProject(ActionEvent event) {
 		
 		String projectName = listViewProjects.getSelectionModel().getSelectedItem();
-		// TODO
 		// 1. use interlight-model method to deserialize json into common-datamodel
-		// TODO only stub now
-		ISceneSet sceneSet = new ISceneSet();
-		sceneSet.setScene(new IScene(projectName, 8.0, 6.0));
-		IRoom room = new IRoom(10.0);
-		room.getPoints().add(new IPoint(1.0, 1.0));
-		room.getPoints().add(new IPoint(5.0, 1.0));
-		room.getPoints().add(new IPoint(4.0, 4.0));
-		sceneSet.setRoom(room);
-		sceneSet.getLightPoints().add(new ILightPoint(1, new IPoint(5.0, 5.0), 9.0));
-		sceneSet.getCuboids().add(new ICuboid(new IPoint(2.0, 2.0), 4.0, 1.0, 1.0, 0, true));
+		ISceneSet sceneSet = new JSONToData().main("projects/"+projectName+"/scene.json");
 		// 2. convert common-datamodel to interface datamodel
 		guiHelper.modelToGui(sceneSet);
 		// 3. create scene from converted objects
-		
 		load();
 	}
 
@@ -520,11 +507,12 @@ public class MainController {
 	}
 	
 	private void save() {
-		// TODO
 		// 1. convert gui model to common-datamodel
-		guiHelper.guiToModel();
+		ISceneSet sceneSet = guiHelper.guiToModel();
 		// 2. use interlight-model method to create json scene from common-datamodel
+		DataToJSON data = new DataToJSON(sceneSet.getCuboids(), sceneSet.getCylinders(), sceneSet.getLightPoints(), sceneSet.getLightSources(), sceneSet.getRoom(), sceneSet.getScene());
 		// 3. save it to file in project folder
+		data.transformAndGenerate();
 	}
 	
 	@FXML

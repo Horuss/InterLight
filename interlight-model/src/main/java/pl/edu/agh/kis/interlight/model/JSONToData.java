@@ -27,15 +27,15 @@ public class JSONToData {
 
 	
 	
-	private static List<ICuboid> cuboids = new LinkedList<>();
-	private static List<ICylinder> cylinders = new LinkedList<>();
-	private static List<ILightPoint> lightPoints = new LinkedList<>();
-	private static List<ILightSource> lightSources = new LinkedList<>();
-	private static List<IPoint> points = new LinkedList<>();
+	private List<ICuboid> cuboids = new LinkedList<>();
+	private List<ICylinder> cylinders = new LinkedList<>();
+	private List<ILightPoint> lightPoints = new LinkedList<>();
+	private List<ILightSource> lightSources = new LinkedList<>();
+	private List<IPoint> points = new LinkedList<>();
 	
 
 
-		public static ISceneSet main(String adress) {
+		public ISceneSet main(String adress) {
 			
 			
 			JSONReader json = new JSONReader(adress);

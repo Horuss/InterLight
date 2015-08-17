@@ -1,6 +1,7 @@
 package pl.edu.agh.kis.interlight.model;
 
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -150,8 +151,11 @@ public class JSONCreator {
    //write to file
 		
 		try {
-	    	 
-	    	 FileWriter file = new FileWriter(scene.getScene_name()+"_scene.json");
+			 File theDir = new File("projects/"+scene.getScene_name());
+			 if (!theDir.exists()) {
+				 	theDir.mkdir();
+				}
+	    	 FileWriter file = new FileWriter("projects/"+scene.getScene_name()+"/scene.json");
 	    	 file.write(sceneObject.toJSONString());
 	    	 file.flush();
 	    	 file.close();
