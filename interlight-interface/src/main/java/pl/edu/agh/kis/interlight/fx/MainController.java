@@ -10,6 +10,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
@@ -90,10 +91,6 @@ public class MainController {
 	private Button btnCreateRectangle;
 	@FXML
 	private Button btnCreateCircle;
-	@FXML
-	private Button btnCalculate;
-	@FXML 
-	private Button btnEditJson;
 	@FXML
 	private TableView<ISolution> tableOutput;
 	@FXML
@@ -486,6 +483,21 @@ public class MainController {
 		alert.setContentText("AGH-UST 2015\nJakub Czajkowski, Bart³omiej Gnojek, Rafa³ Salawa");
 		alert.showAndWait();
 	}
+	
+	@FXML
+	void menuHelp(ActionEvent event) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.getButtonTypes().removeAll(ButtonType.CANCEL);
+		alert.setTitle("Help");
+		alert.setHeaderText("InterLight");
+		alert.setContentText("Design indoor lighting with InterLight!\n\n"
+				+ "1) Room: draw room boundaries, add with left mouse button and remove with right.\n\n"
+				+ "2) Objects: add them using buttons, move using \"drag and drop\" or edit properties of selected one manually.\n\n"
+				+ "3) Light points: add them using buttons, single or whole net.\n\n"
+				+ "4) Light sources: add them with IES file and select those, that you want to be considered by optimalization.\n\n"
+				+ "Run optimalization to find best solutions!");
+		alert.showAndWait();
+	}
 
 	@FXML
 	void menuClose(ActionEvent event) {
@@ -499,13 +511,22 @@ public class MainController {
 	
 	@FXML
 	void menuSave(ActionEvent event) {
+		save();
+	}
+
+	@FXML
+	void btnSave(ActionEvent event) {
+		save();
+	}
+	
+	private void save() {
 		// TODO
-		// 1. convert gui model to common-datamodel 
+		// 1. convert gui model to common-datamodel
 		guiHelper.guiToModel();
 		// 2. use interlight-model method to create json scene from common-datamodel
 		// 3. save it to file in project folder
 	}
-
+	
 	@FXML
 	void calculate(ActionEvent event) {
 		// TODO
