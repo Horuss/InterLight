@@ -1,5 +1,9 @@
 package pl.edu.agh.kis.interlight.fx;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Optional;
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -35,7 +39,9 @@ import pl.edu.agh.kis.interlight.fx.model.LightPoint;
 import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.SceneShape;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
+import pl.edu.agh.kis.interlight.fx.parts.EditJsonDialog;
 import pl.edu.agh.kis.interlight.model.DataToJSON;
+import pl.edu.agh.kis.interlight.model.JSONReadToString;
 import pl.edu.agh.kis.interlight.model.JSONToData;
 
 public class MainController {
@@ -483,6 +489,7 @@ public class MainController {
 				+ "3) Light points: add them using buttons, single or whole net.\n\n"
 				+ "4) Light sources: add them with IES file and select those, that you want to be considered by optimalization.\n\n"
 				+ "Run optimalization to find best solutions!");
+		alert.getDialogPane().setPrefWidth(400.0);
 		alert.showAndWait();
 	}
 
@@ -536,12 +543,35 @@ public class MainController {
 
 	@FXML
 	void btnEditJson(ActionEvent event) {
-		// TODO
-		// 1. convert gui model to common-datamodel 
-		guiHelper.guiToModel();
+		// 1. convert gui model to common-datamodel
 		// 2. use interlight-model method to create json scene from common-datamodel
+		save();
 		// 3. display new window: json editor with validation functionality
-		//	textarea z jsonem, example w formie helpa z boku, buttony: validacje i zatwierdzenie
+		Optional<String> result = new EditJsonDialog(
+				JSONReadToString.readPrettyJson("projects/"
+						+ guiHelper.getSceneModel().getName() + "/scene.json"))
+				.showAndWait();
+
+		if (result.isPresent()) {
+			String editJsonResult = result.get();
+			try {
+				FileWriter file = new FileWriter("projects/"
+						+ guiHelper.getSceneModel().getName() + "/scene.json");
+				file.write(editJsonResult);
+				file.flush();
+				file.close();
+
+				ISceneSet sceneSet = new JSONToData().main("projects/"
+						+ guiHelper.getSceneModel().getName() + "/scene.json");
+				guiHelper.modelToGui(sceneSet);
+				canvasWrapper.getChildren().clear();
+				load();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
 	}
 	
 	private void load() {

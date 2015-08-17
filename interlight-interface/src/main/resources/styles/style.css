@@ -45,3 +45,7 @@
 	-fx-pref-width: 110;
 	-fx-pref-height: 100;
 }
+
+.text-area-disabled .content{
+  -fx-background-color: #E6E6E6;
+}
