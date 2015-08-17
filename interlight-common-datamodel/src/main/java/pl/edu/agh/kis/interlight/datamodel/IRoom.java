@@ -12,6 +12,11 @@ public class IRoom {
 
 	private Double height;
 	private List<IPoint> points;
+	
+	public IRoom(Double height) {
+		this.height = height;
+		this.points = new LinkedList<>();
+	}
 
 	public IRoom(Double height, List<IPoint> points) {
 		this.height = height;

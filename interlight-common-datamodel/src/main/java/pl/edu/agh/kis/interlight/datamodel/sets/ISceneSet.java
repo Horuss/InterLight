@@ -19,7 +19,7 @@ public class ISceneSet {
 	private IRoom room;
 	private IScene scene;
 	
-	
+	public ISceneSet() {}
 	
 	public ISceneSet(List<ICuboid> cuboids, List<ICylinder> cylinders,
 			List<ILightPoint> lightPoints, List<ILightSource> lightSources,
