@@ -1,21 +1,17 @@
 package pl.edu.agh.kis.interlight.fx.parts;
 
-import java.io.IOException;
-
-import com.github.fge.jsonschema.core.exceptions.ProcessingException;
-
-import pl.edu.agh.kis.interlight.model.JSONSchema;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
+import pl.edu.agh.kis.interlight.model.JSONSchema;
 
 public class EditJsonDialog extends Dialog<String> {
 
@@ -76,7 +72,7 @@ public class EditJsonDialog extends Dialog<String> {
 		splitPane.setDividerPositions(0.6, 0.4);
 
 		getDialogPane().setContent(splitPane);
-		
+
 		getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.YES,
 				ButtonType.CANCEL);
 
@@ -84,7 +80,11 @@ public class EditJsonDialog extends Dialog<String> {
 				ButtonType.YES);
 		btnValidate.setText("Validate");
 		btnValidate.addEventFilter(ActionEvent.ACTION, event -> {
-			validate(textArea.getText());
+			if (validate(textArea.getText())) {
+				showValidMsg();
+			} else {
+				showInvalidMsg();
+			}
 			event.consume();
 		});
 
@@ -93,13 +93,14 @@ public class EditJsonDialog extends Dialog<String> {
 		btnSave.setText("Validate & Confirm");
 		btnSave.addEventFilter(ActionEvent.ACTION, event -> {
 			if (!validate(textArea.getText())) {
+				showInvalidMsg();
 				event.consume();
 			}
 		});
 
 		setResultConverter(dialogButton -> {
 			if (dialogButton == ButtonType.OK) {
-				if(validate(textArea.getText())) {
+				if (validate(textArea.getText())) {
 					return textArea.getText();
 				}
 			}
@@ -107,23 +108,27 @@ public class EditJsonDialog extends Dialog<String> {
 		});
 	}
 
+	private void showInvalidMsg() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("InterLight");
+		alert.setHeaderText("Invalid JSON");
+		alert.setContentText("JSON scene is not valid in terms of schema");
+		alert.showAndWait();
+	}
+
+	private void showValidMsg() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("InterLight");
+		alert.setHeaderText("Valid JSON!");
+		alert.setContentText("OK! JSON scene valid!");
+		alert.showAndWait();
+	}
+
 	private boolean validate(String text) {
 		try {
-			boolean validate = JSONSchema.validate(text);
-			if(!validate) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("InterLight");
-				alert.setHeaderText("Invalid JSON");
-				alert.setContentText("JSON scene is not valid in terms of schema");
-				alert.showAndWait();
-			}
-			return validate;
-		} catch (IOException | ProcessingException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("InterLight");
-			alert.setHeaderText("Validation Exception");
-			alert.setContentText("There was some error during validation");
-			alert.showAndWait();
+			return JSONSchema.validate(text);
+		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
