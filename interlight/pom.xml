@@ -29,6 +29,7 @@
 	<modules>
 		<module>../interlight-common-datamodel</module>
 		<module>../interlight-model</module>
+		<module>../interlight-radiance</module>
 		<module>../interlight-opt</module>
 		<module>../interlight-interface</module>
 	</modules>
