@@ -25,7 +25,7 @@
      void light bright
      0
      0
-     3  200  200  200
+     3  500  500  500
      #  red_emission  green_emission  blue_emission  #
 
      # this is the material for my test ball:
@@ -84,26 +84,32 @@
      #!genbox gray_paint room  6  6  3  -i
 # graniastoslup!!!
 !genprism gray_paint room 4 0 0 0 6 6 6 6 0 -l 0 0 3
-		void brightdata example_dist
-4 flatcorr D:\Programowanie\Java\_EclipseWorkspace\_mgr\InterLight\uploads\Plyta\Wyniki\example.dat source.cal src_theta 
-0
-1 310.772
+		
+#void brightdata example_dist
+#4 flatcorr example.dat source.cal src_theta 
+#0
+#1 310.772
 
-example_dist light example_light
-0
-0
-3 1.48483 0.807873 0.232091
+#example_dist light example_light
+#0
+#0
+#3 1.48483 0.807873 0.232091
 
-example_light ring example.d
-0
-0
-8
-	1  5  2.75
-	0 0 -1
-	0 0.032004
+#example_light ring example.d
+#0
+#0
+#8
+#	1  5  2.75
+#	0 0 -1
+#	0 0.032004
 	
-		 example_light sphere fixture
-     0
+#		 example_light sphere fixture
+#    0
+#     0
+#     4  1  5  2.75  .125
+
+bright sphere fixture
+    0
      0
      4  1  5  2.75  .125
 

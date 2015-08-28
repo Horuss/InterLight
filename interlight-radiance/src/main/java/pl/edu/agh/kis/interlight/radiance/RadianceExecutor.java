@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class RadianceExecutor {
-
+	
 	public static final String COMMAND_OCONV = "oconv";
 	public static final String COMMAND_RTRACE = "rtrace";
 	public static final String COMMAND_RCALC = "rcalc";
@@ -145,26 +146,54 @@ public class RadianceExecutor {
 	
 	//stub
 	public void visualization() throws IOException {
+		
+		Path source = Paths.get(commandProvider.getProjectPath("SampleProject")
+				+ File.separator + "room.rad");
+		Path dest = Paths.get(commandProvider.getProjectPath("SampleProject")
+				+ File.separator + "room.oct");
+		if (!Files.exists(dest)) {
+			Files.createFile(dest);
+		}
+		
 		List<String> commands = new ArrayList<String>();
 		commands.add(commandProvider
-				.createCommand(RadianceExecutor.COMMAND_RVU));
-		//observer point
-		commands.add("-vp");
-		commands.add("0");
-		commands.add("0");
-		commands.add("2.725");
-		//observer direction
-		commands.add("-vd");
-		commands.add("0.5");
-		commands.add("0.5");
-		commands.add("-0.5");
-		commands.add("room.oct");
-		ProcessBuilder builder = new ProcessBuilder(commands);
-		builder.directory(new File(commandProvider.getProjectPath("SampleProject")));
+				.createCommand(RadianceExecutor.COMMAND_OCONV));
+		commands.add("-");
+
+		final ProcessBuilder builder = new ProcessBuilder(commands);
+		builder.directory(new File(commandProvider.getCommandsPath()));
 		builder.redirectErrorStream(true);
+		builder.redirectInput(source.toFile());
+		builder.redirectOutput(dest.toFile());
 		Process process = builder.start();
 		try {
 			process.waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		
+		List<String> commands2 = new ArrayList<String>();
+		commands2.add(commandProvider
+				.createCommand(RadianceExecutor.COMMAND_RVU));
+		//observer point
+		commands2.add("-vp");
+		commands2.add("0");
+		commands2.add("0");
+		commands2.add("2.725");
+		//observer direction
+		commands2.add("-vd");
+		commands2.add("0.5");
+		commands2.add("0.5");
+		commands2.add("-0.5");
+		commands2.add(commandProvider.getProjectPath("SampleProject")
+				+ File.separator + "room.oct");
+		ProcessBuilder builder2 = new ProcessBuilder(commands2);
+		builder2.directory(new File(commandProvider.getCommandsPath()));
+		builder2.redirectErrorStream(true);
+		Process process2 = builder2.start();
+		try {
+			process2.waitFor();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

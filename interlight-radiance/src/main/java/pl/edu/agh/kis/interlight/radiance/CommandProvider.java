@@ -1,12 +1,11 @@
 package pl.edu.agh.kis.interlight.radiance;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class CommandProvider {
 	
-	public static boolean isTest = false;
-
 	private String systemDir;
 
 	public CommandProvider() {
@@ -19,8 +18,8 @@ public class CommandProvider {
 						+ File.separator + "radiance" + File.separator
 						+ systemDir + File.separator).toAbsolutePath()
 				.toString();
-		if (!path.contains("target" + File.separator + "jfx" + File.separator
-				+ "app") && !isTest) {
+		if(!Files.exists(Paths.get(System.getProperty("user.dir") + File.separator + "lib"
+						+ File.separator + "radiance"))) {
 			path = path.replace("lib" + File.separator + "radiance", "target"
 					+ File.separator + "jfx" + File.separator + "app"
 					+ File.separator + "lib" + File.separator + "radiance");
