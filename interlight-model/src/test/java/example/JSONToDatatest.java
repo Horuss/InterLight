@@ -3,7 +3,7 @@ package example;
 import java.io.IOException;
 
 import pl.edu.agh.kis.interlight.datamodel.sets.ISceneSet;
-import pl.edu.agh.kis.interlight.model.JSONToData;
+import pl.edu.agh.kis.interlight.scene.JSONToData;
 
 
 public class JSONToDatatest {

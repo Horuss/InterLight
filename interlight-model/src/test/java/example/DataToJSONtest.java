@@ -12,14 +12,14 @@ import pl.edu.agh.kis.interlight.datamodel.ILightSource;
 import pl.edu.agh.kis.interlight.datamodel.IRoom;
 import pl.edu.agh.kis.interlight.datamodel.IScene;
 import pl.edu.agh.kis.interlight.datamodel.util.IPoint;
-import pl.edu.agh.kis.interlight.model.DataToJSON;
 import pl.edu.agh.kis.interlight.model.JCuboid;
 import pl.edu.agh.kis.interlight.model.JCylinder;
 import pl.edu.agh.kis.interlight.model.JLightPoint;
 import pl.edu.agh.kis.interlight.model.JLightSource;
 import pl.edu.agh.kis.interlight.model.JPoint;
-import pl.edu.agh.kis.interlight.model.JSONCreator;
 import pl.edu.agh.kis.interlight.model.JScene;
+import pl.edu.agh.kis.interlight.scene.DataToJSON;
+import pl.edu.agh.kis.interlight.scene.JSONCreator;
 
 public class DataToJSONtest {
 

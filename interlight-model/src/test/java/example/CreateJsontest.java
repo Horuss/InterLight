@@ -5,12 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import pl.edu.agh.kis.interlight.model.JPoint;
-import pl.edu.agh.kis.interlight.model.JSONCreator;
 import pl.edu.agh.kis.interlight.model.JCuboid;
 import pl.edu.agh.kis.interlight.model.JCylinder;
 import pl.edu.agh.kis.interlight.model.JLightPoint;
 import pl.edu.agh.kis.interlight.model.JLightSource;
 import pl.edu.agh.kis.interlight.model.JScene;
+import pl.edu.agh.kis.interlight.scene.JSONCreator;
 
 public class CreateJsontest {
 	

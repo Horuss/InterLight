@@ -1,6 +1,6 @@
 package example;
 
-import pl.edu.agh.kis.interlight.model.JSONReadToString;
+import pl.edu.agh.kis.interlight.scene.JSONReadToString;
 
 
 public class JSONReadToStringtest {

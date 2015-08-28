@@ -40,9 +40,9 @@ import pl.edu.agh.kis.interlight.fx.model.LightSource;
 import pl.edu.agh.kis.interlight.fx.model.SceneShape;
 import pl.edu.agh.kis.interlight.fx.parts.BoundsAnchor;
 import pl.edu.agh.kis.interlight.fx.parts.EditJsonDialog;
-import pl.edu.agh.kis.interlight.model.DataToJSON;
-import pl.edu.agh.kis.interlight.model.JSONReadToString;
-import pl.edu.agh.kis.interlight.model.JSONToData;
+import pl.edu.agh.kis.interlight.scene.DataToJSON;
+import pl.edu.agh.kis.interlight.scene.JSONReadToString;
+import pl.edu.agh.kis.interlight.scene.JSONToData;
 
 public class MainController {
 
