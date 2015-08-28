@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 
-import pl.edu.agh.kis.intelight.schema.JSONSchema;
+import pl.edu.agh.kis.interlight.schema.JSONSchema;
 
 public class JSONSchematest {
 	

@@ -4,8 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import pl.edu.agh.kis.intelight.schema.JSONSchema;
 import pl.edu.agh.kis.interlight.scene.JSONReadToString;
+import pl.edu.agh.kis.interlight.schema.JSONSchema;
 
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 
